@@ -1,10 +1,17 @@
+<style>
+    .nav-text:hover{
+        font-style: italic;
+    }
+</style>
+
+
 <div class="nk-sidebar">           
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
-           <a href="index.php"> <li class="nav-label">Dashboard</li></a>
+           <a href="home.php"> <li class="nav-label">Dashboard</li></a>
             <li>
-                <a href="list.php" aria-expanded="false">
-                    <i class="icon-badge list-icon"></i><span class="nav-text">List</span>
+                <a href="member_list.php" aria-expanded="false">
+                <i class="fa fa-users" aria-hidden="true"></i><span class="nav-text">Member_List</span>
                 </a>
             </li>
             <li>

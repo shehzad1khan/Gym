@@ -1,13 +1,13 @@
 <?php 
 session_start();
-include('database.php');
+include('config.php');
 
  if(isset($_POST['login'])){
   $username = $_POST['username'];
   $pwd = $_POST['password'];
   $password = md5($pwd);
 
-   $select = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+   $select = "SELECT * FROM admin WHERE username = '$username' AND password = '$password'";
    $query = mysqli_query($link, $select);
 
    if(mysqli_num_rows($query) > 0)
@@ -19,7 +19,7 @@ include('database.php');
        $_SESSION['image'] = $row['image'];
        
        // header("location:index.php");
-       echo "<script>window.open('index.php','_self')</script>";
+       echo "<script>window.open('home.php','_self')</script>";
     }
     
    } else{

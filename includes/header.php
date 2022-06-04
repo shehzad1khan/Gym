@@ -31,7 +31,7 @@ if (!isset($_SESSION)) session_start();
                                 <i class="mdi mdi-email-outline"></i>
                                 <span class="badge gradient-1 badge-pill badge-primary">3</span>
                             </a>
-                            <div class="drop-down animated fadeIn dropdown-menu">
+                            <!-- <div class="drop-down animated fadeIn dropdown-menu">
                                 <div class="dropdown-content-heading d-flex justify-content-between">
                                     <span class="">3 New Messages</span>
 
@@ -81,14 +81,14 @@ if (!isset($_SESSION)) session_start();
                                     </ul>
 
                                 </div>
-                            </div>
+                            </div> -->
                         </li>
                         <li class="icons dropdown">
                             <a href="javascript:void(0)" data-toggle="dropdown">
                                 <i class="mdi mdi-bell-outline"></i>
                                 <span class="badge badge-pill gradient-2 badge-primary">3</span>
                             </a>
-                            <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
+                            <!-- <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
                                 <div class="dropdown-content-heading d-flex justify-content-between">
                                     <span class="">2 New Notifications</span>
 
@@ -134,9 +134,9 @@ if (!isset($_SESSION)) session_start();
                                     </ul>
 
                                 </div>
-                            </div>
+                            </div> -->
                         </li>
-                        <li class="icons dropdown d-none d-md-flex">
+                        <!-- <li class="icons dropdown d-none d-md-flex">
                             <a href="javascript:void(0)" class="log-user" data-toggle="dropdown">
                                 <span>English</span> <i class="fa fa-angle-down f-s-14" aria-hidden="true"></i>
                             </a>
@@ -148,27 +148,25 @@ if (!isset($_SESSION)) session_start();
                                     </ul>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="icons dropdown">
+                        <h5 class="mr-1">Welcome, <b><i><?php echo $_SESSION['name'];?></i></b></h5>
                             <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                                 <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
+                                <img src="db_images/admin/<?php echo $_SESSION['image'];?>" height="40" width="40" alt="Img">
                             </div>
                             <div class="drop-down dropdown-profile   dropdown-menu">
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
+                                          <a href="profile.php"><i class="icon-user"></i> <span>Profile</span></a>
                                         </li>
+                                         <hr class="my-2">
                                         <li>
-                                            <a href="email-inbox.html"><i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill badge-primary">3</div></a>
+                                        <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
                                         </li>
-
                                         <hr class="my-2">
-                                        <li>
-                                            <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
-                                        </li>
-                                        <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                        <li><a href="login.php"><i class="icon-key"></i> <span>Logout</span></a></li>
                                     </ul>
                                 </div>
                             </div>

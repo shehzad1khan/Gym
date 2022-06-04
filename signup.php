@@ -1,16 +1,16 @@
 <?php 
   session_start();
-  include('database.php');
+  include('config.php');
    
    if(isset($_POST['register'])){
    
-    $target = "db_images/".basename($_FILES['image']['name']); 
+    $target = "db_images/admin/".basename($_FILES['image']['name']); 
    $name = mysqli_real_escape_string($link, $_POST['name']);  
    $username = mysqli_real_escape_string($link, $_POST['username']);
    $password = md5($_POST['password']); 
    $image = $_FILES['image']['name']; 
   
-   $selectuser = "SELECT * FROM users WHERE username = '$username'";
+   $selectuser = "SELECT * FROM admin WHERE username = '$username'";
    $userquery = mysqli_query($link, $selectuser);
    $usercount = mysqli_num_rows($userquery);   
 
@@ -18,7 +18,7 @@
     echo '<div class="alert alert-danger text-center col-md-4 offset-5">This UserName is already register</div>';
          }
          else{    
-              $insert = "INSERT INTO users (name, username, password, image) 
+              $insert = "INSERT INTO admin (name, username, password, image) 
               VALUES ('$name', '$username', '$password', '$image')";
               
               $query = mysqli_query($link, $insert);
