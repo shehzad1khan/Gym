@@ -15,8 +15,8 @@
                 </a>
             </li>
             <li>
-                <a href="report.php" aria-expanded="false">
-                    <i class="icon-badge report-icon"></i><span class="nav-text">Report</span>
+                <a href="add_member.php" aria-expanded="false">
+                    <i class="icon-badge report-icon"></i><span class="nav-text">Add Member</span>
                 </a>
             </li>
             <li>

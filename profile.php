@@ -21,9 +21,7 @@ if(isset($_POST['change'])){
             $_SESSION['flash_message_type'] = "error";
             //    echo '<div class="alert alert-danger text-center">New Password and Confirm Password are not matched.</div>';
                }
-
 }
-
    if(isset($_POST['submit'])){  
     $target = "db_images/admin/".basename($_FILES['image']['name']);    
     $name = mysqli_real_escape_string($link, $_POST['Name']);    
@@ -54,7 +52,7 @@ if(isset($_POST['change'])){
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>GMS-Profile</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/icon.jpg">
     <!-- Custom Stylesheet -->  
     <link href="css/style.css" rel="stylesheet">
       <!-- Toaster CSS -->

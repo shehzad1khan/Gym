@@ -106,7 +106,7 @@
         <!-- *********** table row start ********** -->
             <div class="row">
                 <div class="col-lg-12 col-sm-12">
-                <table id="example" class="table table-hover table-responsive-lg table-striped table-bordered" style="width:100%;">
+                <table id="example" class="table border-radius-2 table-hover table-responsive-lg table-striped table-bordered" style="width:100%;">
         <thead>
             <tr class="table-info">
                 <th>Name</th>
