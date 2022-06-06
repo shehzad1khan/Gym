@@ -95,6 +95,7 @@
 
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
+                    <button class="btn btn-success add">Add</button>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0)">List</a></li>
@@ -588,6 +589,88 @@
     </table>
                 </div>
             </div>
+    <!--******* Form Modal start **********-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title offset-5" id="exampleModalLabel">ADD RECORD</h5>
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <!-- --Dailog Form Tag-- -->
+                <div class="modal-body">
+                  <form method="POST" action="#" id="form" enctype="multipart/form-data">
+                    <div class="form-row">
+                      <div class="col">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                      </div>
+                      <div class="col">
+                        <label for="age" class="col-form-label">Age:</label>
+                        <input type="number" class="form-control" id="age" name="age">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col">
+                        <label for="address" class="col-form-label">Address:</label>
+                        <input type="text" class="form-control" id="address" name="address" >
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col">
+                        <label for="contact" class="col-form-label">Contact:</label>
+                        <input type="text" id="contact" class="input form-control" name="contact">
+                      </div>
+                      <div class="col">
+                        <label for="email" class="col-form-label">Email:</label>
+                        <input type="email" id="email" class="input form-control" name="email">
+                      </div>                      
+                    </div>
+                    <div class="form-row">
+                    <label class="offset-2 col-form-label">Gender :</label>                                       
+                    <label class="col-lg-2 col-form-label text-center" for="male">Male <span class="text-danger">* </span>:
+                        </label>
+                        <div class="col-lg-2">
+                        <input type="radio" class="form-check-input" name="gender" id="male" value="male">
+                        </div>                             
+                        <label class="col-lg-2 col-form-label" for="female">Female <span class="text-danger">* </span>:
+                        </label>
+                        <div class="col-lg-1">
+                            <input type="radio" class="form-check-input" id="female" name="gender" value="female">
+                        </div>
+                      </div>
+                      <div class="form-row ml-3">
+                    <label class="offset-2 col-form-label">Shift :</label>                                       
+                    <label class="col-lg-2 col-form-label text-center" for="morning">Morning <span class="text-danger">* </span>:
+                        </label>
+                        <div class="col-lg-2">
+                        <input type="radio" class="form-check-input" name="shift" id="morning" value="morning">
+                        </div>                             
+                        <label class="col-lg-2 col-form-label" for="evening">Evening <span class="text-danger">* </span> :
+                        </label>
+                        <div class="col-lg-1">
+                            <input type="radio" class="form-check-input" id="evening" name="shift" value="evening">
+                        </div>
+                      </div>
+                    <div class="form-row">
+                    <div class="col" id="file-div">
+                      <label for="image" class="col-form-label">Picture:</label>
+                      <input type="file" id="image" class="form-control" name="image">                      
+                    </div>
+                    </div>
+                    <div class="form-group mr-auto mt-2">
+                      <input type="submit" class="btn btn-success offset-9" name="submit" value="Submit" id="submit">
+                      <button type="button" class="btn btn-danger ml-2" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- Form modal ends -->
               
 
             </div>
@@ -626,9 +709,44 @@
 
     <!-- ******** Script start ********* -->
     <script>
-        $(document).ready(function() {
+$(document).ready(function() {
             $('#example').DataTable();
-        } );
+
+       $('.add').on('click', function() {
+            $('#exampleModal').modal('show');
+        });
+        
+        $('#form').on('submit', function(e){
+            e.preventDefault();    
+            var formData = new FormData(this);
+            $.ajax({
+                url: "insert.php",
+                method: "POST",
+                data: formData,
+                processData: false, 
+                contentType: false,
+                cache: false,              
+                success: function(data) {
+                    if(data == 1){
+                        $('#form')[0].reset();
+                        $('#exampleModal').modal('hide');
+                        $('#form')[0].reset();
+                        $('#example').DataTable().destroy();
+                        $('#example').DataTable();
+                        alert("Data Inserted Successfully");
+                       
+                    }
+                    else{
+                        alert("Data Inserted Failed");
+                        $('#exampleModal').modal('hide');
+                    }                             
+                }        
+            });
+        });
+
+
+
+});
 
     </script>
 

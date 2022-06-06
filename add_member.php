@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Blank Page</title>
+    <title>Gym-AddMember</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/icon.jpg">
     <!-- Custom Stylesheet -->
@@ -94,96 +94,75 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-validation">
-                                    <form class="form-valide" action="#" method="post">
+                                    <form class="form-valide" action="insert.php" method="POST" enctype="multipart/form-data">
                                     <div class="form-group row">
-                                            <label class="border text-center col-lg-2 col-form-label" for="name">Name<span class="text-danger">* </span>:
+                                            <label class="text-center col-lg-2 col-form-label" for="name">Name<span class="text-danger">* </span>:
                                             </label>
                                             <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="name" name="val-username" placeholder="Enter Name.." name="name">
+                                                <input type="text" class="form-control" id="name" placeholder="Name" name="name">
                                             </div>
                                   
-                                            <label class="col-lg-2 text-center col-form-label" for="username">Username <span class="text-danger">* </span>:
+                                            <label class="col-lg-2 text-center col-form-label" for="age">Age <span class="text-danger">* </span>:
                                             </label>
                                             <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="username" name="val-username" placeholder="Enter a username.." name="username">
+                                                <input type="number" class="form-control" id="age" placeholder="Age" name="age">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label text-center" for="address">Address <span class="text-danger">* </span>:
+                                            </label>
+                                            <div class="col-lg-3">
+                                                <input type="text" name="address" class="form-control" id="address" placeholder="Address">
+                                            </div>                             
+                                            <label class="col-lg-2 col-form-label text-center" for="contact">Contact <span class="text-danger">* </span>:
+                                            </label>
+                                            <div class="col-lg-3">
+                                                <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label text-center" for="email">Email <span class="text-danger">* </span>:
                                             </label>
-                                            <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="email" name="val-email" placeholder="Your valid email..">
+                                            <div class="col-lg-8">
+                                                <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+                                            </div>                                         
+                                        </div>
+                                        <div class="form-group row"> 
+                                            <label class="offset-2 col-form-label">Gender :</label>                                       
+                                        <label class="col-lg-1 col-form-label text-center" for="male">Male <span class="text-danger">* </span>:
+                                            </label>
+                                            <div class="col-lg-1">
+                                            <input type="radio" class="form-check-input" name="gender" id="male" value="male">
                                             </div>                             
-                                            <label class="col-lg-2 col-form-label text-center" for="val-password">Password <span class="text-danger">* </span>:
+                                            <label class="col-lg-1 col-form-label" for="female">Female <span class="text-danger">* </span>:
                                             </label>
-                                            <div class="col-lg-3">
-                                                <input type="password" class="form-control" id="val-password" name="val-password" placeholder="Choose a safe one..">
+                                            <div class="col-lg-1">
+                                                <input type="radio" class="form-check-input" id="female" name="gender" value="female">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row"> 
+                                            <label class="offset-2 col-form-label">Shift :</label>                                       
+                                        <label class="col-lg-1 col-form-label text-center" for="morning">Morning <span class="text-danger">* </span>:
+                                            </label>
+                                            <div class="col-lg-1">
+                                            <input type="radio" class="form-check-input" name="shift" id="morning" value="morning">
+                                            </div>                             
+                                            <label class="col-lg-1 col-form-label " for="evening">Evening <span class="text-danger">* </span>:
+                                            </label>
+                                            <div class="col-lg-1">
+                                                <input type="radio" class="form-check-input" id="evening" name="shift" value="evening">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-2 col-form-label text-center" for="val-skill">Best Skill <span class="text-danger">* </span>:
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <select class="form-control" id="val-skill" name="val-skill">
-                                                    <option value="">Please select</option>
-                                                    <option value="html">HTML</option>
-                                                    <option value="css">CSS</option>
-                                                    <option value="javascript">JavaScript</option>
-                                                    <option value="angular">Angular</option>
-                                                    <option value="angular">React</option>
-                                                    <option value="vuejs">Vue.js</option>
-                                                    <option value="ruby">Ruby</option>
-                                                    <option value="php">PHP</option>
-                                                    <option value="asp">ASP.NET</option>
-                                                    <option value="python">Python</option>
-                                                    <option value="mysql">MySQL</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-2 col-form-label text-center" for="val-website">Website <span class="text-danger">* </span>:
-                                            </label>
-                                            <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="val-website" name="val-website" placeholder="http://example.com">
-                                            </div>                      
-                                            <label class="col-lg-2 col-form-label text-center" for="val-phoneus">Phone (US) <span class="text-danger">* </span>:
-                                            </label>
-                                            <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="val-phoneus" name="val-phoneus" placeholder="212-999-0000">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-2 col-form-label" for="val-digits">Digits <span class="text-danger">* </span>:
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-digits" name="val-digits" placeholder="5">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-2 col-form-label" for="val-number">Number <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-number" name="val-number" placeholder="5.0">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-2 col-form-label" for="val-range">Range [1, 5] <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-range" name="val-range" placeholder="4">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label"><a href="#">Terms &amp; Conditions</a>  <span class="text-danger">*</span>
+                                            <label class="col-lg-2 col-form-label text-center">Image <span class="text-danger">* </span>:
                                             </label>
                                             <div class="col-lg-8">
-                                                <label class="css-control css-control-primary css-checkbox" for="val-terms">
-                                                    <input type="checkbox" class="css-control-input" id="val-terms" name="val-terms" value="1"> <span class="css-control-indicator"></span> I agree to the terms</label>
+                                                <input type="file" name="image" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-lg-8 ml-auto">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            <div class="col-lg-5 offset-3">
+                                                <input type="submit" name="insert" class="btn btn-block btn-primary" value="Insert">
                                             </div>
                                         </div>
                                     </form>
