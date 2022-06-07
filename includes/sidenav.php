@@ -14,11 +14,7 @@
                 <i class="fa fa-users" aria-hidden="true"></i><span class="nav-text">Member_List</span>
                 </a>
             </li>
-            <li>
-                <a href="add_member.php" aria-expanded="false">
-                    <i class="fa fa-user-plus" aria-hidden="true"></i><span class="nav-text">Add Member</span>
-                </a>
-            </li>
+            
             <li>
                 <a href="logout.php" aria-expanded="false">
                     <i class="icon-badge report-icon"></i><span class="nav-text">Logout</span>
