@@ -109,7 +109,7 @@
                 <div class="col-lg-12 col-sm-12">
                 <table id="example" class="table border-radius-2 table-hover table-responsive-lg table-striped table-bordered" style="width:100%;">
         <thead>
-            <tr class="table-info">
+            <tr class="table-warning">
                 <th>ID</th>
                 <th>Name</th>
                 <th>Age</th>
@@ -124,7 +124,7 @@
         <tbody id="tbody">                  
         </tbody>
         <tfoot>
-            <tr class="table-info">
+            <tr class="table-warning">
                 <th>ID</th>
                 <th>Name</th>
                 <th>Age</th>
@@ -220,8 +220,7 @@
               </div>
             </div>
         </div>
-        <!-- Form modal ends -->
-              
+        <!-- Form modal ends -->      
 
             </div>
             <!-- #/ container -->
@@ -264,6 +263,8 @@ $(document).ready(function() {
 
        $('.add').on('click', function() {
             $('#exampleModal').modal('show');
+            $('#submit').val("Submit");
+            $('#form')[0].reset();
         });
        
     // ******* insert data *********    
@@ -279,7 +280,7 @@ $(document).ready(function() {
                 cache: false,              
                 success: function(data) {
                     if(data == 1){
-                        $("#form").trigger("reset");
+                      $('#form')[0].reset();
                         $('#exampleModal').modal('hide');
                         loadtable();    
                         toastr.success('Record Inserted Successfully');        
@@ -306,45 +307,41 @@ $(document).ready(function() {
           loadtable();
 // ******* show fetch data in modal *********    
       $(document).on('click','.edit-btn', function(){
-         var id = $(this).data("eid");
+         var id = $(this).data('eid');
+         $('#submit').val("Update");
+         $('#exampleModalLabel').html("Update Record");
          console.log(id);   
          $.ajax({
-             url : "fetch.php",
+             url : "fetch.php?editId="+id,
              type : "GET",
-             data : {editId:id},
              dataType : "json",
-             success:function(data){
-                 if(data == 1){
+             success:function(data){                 
                  $('#exampleModal').modal('show');
-                 var id = data.id; 
-                                        
+                 var id = data.id;                                        
                  $('#name').val(data.name);
-                 $('#age').val(data.id);
-                 $('#address').val(data.id);
+                 $('#age').val(data.age);
+                 $('#address').val(data.address);
                  $('#contact').val(data.contact);
                  $('#email').val(data.email);
-                 $('#gender').val(data.email);
-                 $('#shift').val(data.email);
-                 $('#image').val(data.email);
-                 $('#submit').val("Update");
-                 $('#exampleModalLabel').html("Update Record");
+                 $('#shift').val(data.shift);
+                 $('#image').val(data.image);
 
-             }
+               
+                 console.log(id);
+             
             }
          });
       });
 
       //  ********** Delete data from database **********
-      $(document).on("click", ".dlt-btn", function(){
+      $("#example").delegate(".dlt-btn", "click", function(){
            if(confirm("Are you sure you want to delete this record?")){
               var id = $(this).data("did");
-              var something = $(this);
-              $.ajax({
-                url : "delete.php",
-                type : "POST",
-                data : {recordId : id},
+              var something = $(this);             
+               $.ajax({
+                url : "delete.php?recordId="+id,
+                type : "GET",                
                 success : function(data){
-                    console.log(data);
                   if(data == 1){
                     $(something).closest("tr").fadeOut(1000);
                     toastr.error('Record Deleted Successfully');

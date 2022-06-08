@@ -1,9 +1,9 @@
 <?php
-require "config.php";
+include('config.php');
 
-if(isset($_POST['recordId'])){
-     $id = $_POST['recordId'];
-     $sql = "DELETE from members where id = $id";
+if(isset($_GET['recordId'])){
+     $id = $_GET['recordId'];
+     $sql = "DELETE FROM `members` WHERE id = '$id';";
      $query = mysqli_query($link, $sql);
      if($query){
           echo 1;
