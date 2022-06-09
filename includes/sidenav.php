@@ -1,6 +1,10 @@
 <style>
     .nav-text:hover{
         font-style: italic;
+    }  
+    .metismenu li i{
+        color: darkcyan !important;
+        font-size: 20px !important;
     }
 </style>
 
@@ -17,7 +21,7 @@
             
             <li>
                 <a href="logout.php" aria-expanded="false">
-                    <i class="icon-badge report-icon"></i><span class="nav-text">Logout</span>
+                <i class="fa fa-sign-out" aria-hidden="true"></i><span class="nav-text">Logout</span>
                 </a>
             </li>
         </ul>

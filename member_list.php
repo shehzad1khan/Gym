@@ -121,8 +121,8 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody id="tbody">                  
-        </tbody>
+        <!-- <tbody id="tbody">                  
+        </tbody> -->
         <tfoot>
             <tr class="table-warning">
                 <th>ID</th>
@@ -152,6 +152,7 @@
                 <!-- --Dailog Form Tag-- -->
                 <div class="modal-body">
                   <form method="POST" action="#" id="form" enctype="multipart/form-data">
+                  <input type="hidden" name="recordId" id="uid">
                     <div class="form-row">
                       <div class="col">
                         <label for="name" class="col-form-label">Name:</label>
@@ -207,7 +208,8 @@
                     <div class="form-row">
                     <div class="col" id="file-div">
                       <label for="image" class="col-form-label">Picture:</label>
-                      <input type="file" id="image" class="form-control" name="image">                      
+                      <input type="file" id="image" class="form-control" name="image">
+                      <input type="hidden" name="image2" id="image2">                      
                     </div>
                     </div>
                     <div class="form-group mr-auto mt-2">
@@ -259,7 +261,25 @@
     <!-- ******** Script start ********* -->
     <script>
 $(document).ready(function() {           
-        $('#example').DataTable();
+        $('#example').DataTable({
+          order: [[0, 'desc']],
+        "processing": true,
+        ajax: {
+        url: "fetch.php?loadData",
+        type: "POST",
+        },
+        "columns": [
+            {data: 'id'},
+            {data: 'name'},
+            {data: 'age'},
+            {data: 'address'},
+            {data: 'contact'},
+            {data: 'email'},
+            {data: 'gender'},
+            {data: 'shift'},
+            {data: 'action'}
+        ]
+    });
 
        $('.add').on('click', function() {
             $('#exampleModal').modal('show');
@@ -280,6 +300,8 @@ $(document).ready(function() {
                 cache: false,              
                 success: function(data) {
                     if(data == 1){
+                      var table = $('#example').DataTable(); 
+                      table.ajax.reload( null, false );
                       $('#form')[0].reset();
                         $('#exampleModal').modal('hide');
                         loadtable();    
@@ -288,50 +310,74 @@ $(document).ready(function() {
                     else{
                         alert("Data Inserted Failed");
                         $('#exampleModal').modal('hide');
-                        loadtable(); 
+                        
                     }                             
                 }        
             });
         });
-    // ******* fetch and show table data *********    
-    function loadtable(){            
-           $.ajax({
-             url:"fetch.php?loadData",
-             type:"POST",
-             success:function(data){
-                $("#tbody").html(data);
-                console.log(data);                
-             }
-           });      
-          };
-          loadtable();
 // ******* show fetch data in modal *********    
       $(document).on('click','.edit-btn', function(){
+        $('#form')[0].reset();
          var id = $(this).data('eid');
          $('#submit').val("Update");
-         $('#exampleModalLabel').html("Update Record");
-         console.log(id);   
+         $('#exampleModalLabel').html("Update Record");          
          $.ajax({
              url : "fetch.php?editId="+id,
              type : "GET",
              dataType : "json",
-             success:function(data){                 
-                 $('#exampleModal').modal('show');
-                 var id = data.id;                                        
+             success:function(data){                                                       
                  $('#name').val(data.name);
                  $('#age').val(data.age);
                  $('#address').val(data.address);
                  $('#contact').val(data.contact);
-                 $('#email').val(data.email);
+                 $('#email').val(data.email);                
                  $('#shift').val(data.shift);
-                 $('#image').val(data.image);
+                 $('#image').attr('src', 'data.image');                 
 
-               
-                 console.log(id);
-             
+                 if(data.gender == 'male')
+                 {
+                   $('#male').prop("checked", true);
+                 }
+                 else if(data.gender == 'female'){
+                  $('#female').prop("checked", true);
+                 } 
+                 if(data.shift == 'morning'){
+                   $("#morning").prop("checked", true);
+                 } else if(data.shift == 'evening'){
+                   $("#evening").prop("checked", true)
+                 }               
+                 $('#exampleModal').modal('show');               
+
             }
          });
       });
+
+      //  ********** update data to database **********
+      $('#form').on('Update', function(e){
+            e.preventDefault();    
+            var formData = new FormData(this);
+            console.log(this);
+            $.ajax({
+                url: "insert.php",
+                method: "POST",
+                data: formData,
+                processData: false, 
+                contentType: false,
+                cache: false,              
+                success: function(data) {
+                  console.log(data);
+                    if(data == 1){
+                      $('#form')[0].reset();
+                        $('#exampleModal').modal('hide');                           
+                        toastr.success('Record Updated Successfully');        
+                    }
+                    else{
+                        alert("Data Updation Failed");
+                        $('#exampleModal').modal('hide');                        
+                    }                             
+                }        
+            });
+        });         
 
       //  ********** Delete data from database **********
       $("#example").delegate(".dlt-btn", "click", function(){
