@@ -11,6 +11,25 @@
     <!-- Custom Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
+    <style>
+         thead, tfoot{
+               background-color: #F08080;
+               color: white;
+               font-weight: bold;
+               font-size: 18px;
+         }
+         .brnd{
+              color: #6A5ACD;
+              padding-top: 5px;
+              font-size: 30px;
+              font-weight: bold;
+         }
+         tbody{
+                 background-color: #fff;
+                 color:black
+         }
+    </style>
+
 </head>
 
 <body>
@@ -85,11 +104,22 @@
             <!-- row -->
 
             <div class="container-fluid">
-         <!-- table -->
+         
+         <div class="row" style="">
+               <div class="mr-auto col-2">
+                    <p class="brnd">Extreme Soft</p>
+               </div>
+                 <div class="col-2 ml-auto mt-3">
+                    <strong class="pr-1 text-primary">SEARCH</strong>                         
+                    <input type="text" name="search" id="search" placeholder="Type Something" autofocus>
+                 </div>
+               <!-- <a href="pdf.php" style="display: none;" class="btn btn-danger btn-sm offset-2" id="printBtn">Print</a> -->              
+          </div>
+               <!-- table -->
             <div class="row">
                  <div class="col-md-12">  
-                 <table class="table table-striped table-hover" id="result">
-                   <thead class="bg-warning text-white">
+                 <table class="table table-hover table-responsive-lg" style="width:100%;" id="table">
+                   <thead class="text-white">
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Name</th>
@@ -113,7 +143,7 @@
                         $row = mysqli_fetch_array($query);                   
                      ?>
 
-                  <tbody>
+                  <tbody id="tbody">
                     <tr>
                       <th><?php echo $j ?></th>
                       <td><?php echo $row['name'] ?></td>
@@ -123,11 +153,11 @@
                       <td><?php echo $row['email'] ?></td>
                       <td><?php echo $row['gender'] ?></td>
                       <td><?php echo $row['shift'] ?></td>
-                      <td><a href="pdf.php" style="" class="btn btn-info btn-sm offset-2" id="printBtn">Print</a></td>
+                      <td><a href="pdf.php" class="btn btn-info btn-sm offset-2" id="printBtn">Print</a></td>
                     </tr>                   
                   </tbody>
                   <?php } ?>
-                  <tfoot class="bg-warning text-white">
+                  <tfoot class="text-white">
                     <tr>
                     <th scope="col">#</th>
                       <th scope="col">Name</th>
@@ -174,6 +204,25 @@
     <script src="js/settings.js"></script>
     <script src="js/gleek.js"></script>
     <script src="js/styleSwitcher.js"></script>
+
+    <script>
+         $(document).ready(function(){
+              $("#search").on("keyup", function(){
+                   var search = $(this).val();
+                   $.ajax({
+                        url : "fetch.php",
+                        type : "POST",
+                        data : {search : search},
+                        success : function(data){                           
+                             console.log(data);
+                         //     $("#tbody").hide();
+                             $("#tbody").html(data);
+                        }
+                             
+                   })
+               });
+         });
+    </script>
 
 </body>
 

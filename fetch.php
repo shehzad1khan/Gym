@@ -83,5 +83,32 @@ if(isset($_GET['editId'])){
   );
   echo json_encode($array);
 }
+//  ******* Live Search *******
+if(isset($_POST['search'])){
+  $search = $_POST['search'];
+  $sql = "SELECT * from `members` WHERE `name` like '%$search%' OR `age` like '%$search%' OR `address` like '%$search%' OR `contact` like '%$search%' OR `email` like '%$search%' OR `gender` like '%$search%' OR `shift` like '%$search%'";
+  $query = mysqli_query($link, $sql);
+  $count = 1;
+  $output = "";
+  if($row = mysqli_num_rows($query) > 0){
+    while($row = mysqli_fetch_array($query)){
+      $output .= '
+      <tr>
+        <th>'.$count.'</th>
+        <td>'.$row['name'].'</td>
+        <td>'.$row['age'].'</td>
+        <td>'.$row['address'].'</td>
+        <td>'.$row['contact'].'</td>
+        <td>'.$row['email'].'</td>
+        <td>'.$row['gender'].'</td>
+        <td>'.$row['shift'].'</td>
+        <td><a href="#" data-did = "'.$row['id'].'" class="btn btn-info btn-sm offset-2" id="printBtn">Print</a></td>
+      </tr>
+       ';        
+       $count ++;      
+    } 
+      echo $output;     
+  }
+}
 
 ?>
