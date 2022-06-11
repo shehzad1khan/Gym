@@ -152,7 +152,8 @@
                 <!-- --Dailog Form Tag-- -->
                 <div class="modal-body">
                   <form method="POST" action="#" id="form" enctype="multipart/form-data">
-                  <input type="hidden" name="recordId" id="uid">
+                  <input type="hidden" name="id" value="0" id="id">
+                    <input type="hidden" name="action" value="insert" id="action">
                     <div class="form-row">
                       <div class="col">
                         <label for="name" class="col-form-label">Name:</label>
@@ -206,12 +207,13 @@
                         </div>
                       </div>
                     <div class="form-row">
-                    <div class="col" id="file-div">
-                      <label for="image" class="col-form-label">Picture:</label>
-                      <input type="file" id="image" class="form-control" name="image">
-                      <input type="hidden" name="image2" id="image2">                      
+                      <div class="col" id="file-div">
+                        <label for="image" class="col-form-label">Picture:</label>
+                        <input type="file" onchange="previewFile(this);" id="image" class="form-control" name="image">
+                        <input type="hidden" name="image2" id="image2">                      
+                      </div>
                     </div>
-                    </div>
+                    <img id="previewImg" src="images/placeholder-img.png" alt="img" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
                     <div class="form-group mr-auto mt-2">
                       <input type="submit" class="btn btn-success offset-9" name="submit" value="Submit" id="submit">
                       <button type="button" class="btn btn-danger ml-2" data-bs-dismiss="modal">Close</button>
@@ -259,6 +261,21 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- ******** Script start ********* -->
+<script>
+  function previewFile(input){
+      var file = $("input[type=file]").get(0).files[0];
+
+      if(file){
+          var reader = new FileReader();
+
+          reader.onload = function(){
+              $("#previewImg").attr("src", reader.result);
+          }
+
+          reader.readAsDataURL(file);
+      }
+  }
+</script>
     <script>
 $(document).ready(function() {           
         $('#example').DataTable({
@@ -282,9 +299,14 @@ $(document).ready(function() {
     });
 
        $('.add').on('click', function() {
-            $('#exampleModal').modal('show');
-            $('#submit').val("Submit");
-            $('#form')[0].reset();
+        $('#form')[0].reset();
+        $('#exampleModal').modal('show');
+        $('#action').val('insert');
+        $('#id').val('0');
+        $('#exampleModalLabel').html("Add Record");
+        $('#submit').val("Submit");
+        $('#previewImg').attr("src", "db_images/members/placeholder-img.png");
+             
         });
        
     // ******* insert data *********    
@@ -299,19 +321,12 @@ $(document).ready(function() {
                 contentType: false,
                 cache: false,              
                 success: function(data) {
-                    if(data == 1){
-                      var table = $('#example').DataTable(); 
-                      table.ajax.reload( null, false );
-                      $('#form')[0].reset();
-                        $('#exampleModal').modal('hide');
-                        loadtable();    
-                        toastr.success('Record Inserted Successfully');        
-                    }
-                    else{
-                        alert("Data Inserted Failed");
-                        $('#exampleModal').modal('hide');
-                        
-                    }                             
+                  toastr.success(data);
+                  var table = $('#example').DataTable(); 
+                  table.ajax.reload( null, false );
+                  $('#form')[0].reset();
+                  $('#exampleModal').modal('hide');   
+                                                   
                 }        
             });
         });
@@ -319,20 +334,33 @@ $(document).ready(function() {
       $(document).on('click','.edit-btn', function(){
         $('#form')[0].reset();
          var id = $(this).data('eid');
-         $('#submit').val("Update");
+          $('#submit').val("Update");
+          var $image = $('#previewImg');
+          $image.removeAttr('src').replaceWith($image.clone());
+             
          $('#exampleModalLabel').html("Update Record");          
          $.ajax({
              url : "fetch.php?editId="+id,
              type : "GET",
              dataType : "json",
-             success:function(data){                                                       
+             success:function(data){  
+               var img = data.image;                                                     
+                 $('#id').val(data.id);
                  $('#name').val(data.name);
                  $('#age').val(data.age);
                  $('#address').val(data.address);
                  $('#contact').val(data.contact);
                  $('#email').val(data.email);                
                  $('#shift').val(data.shift);
-                 $('#image').attr('src', 'data.image');                 
+                 if(img == null || img == ""){
+                   $('#previewImg').attr("src", "db_images/members/placeholder-img.png");  
+                  }
+                  else{
+                    $("#previewImg").attr("src", "db_images/members/"+img);
+                  }
+                 $('#action').val('update');
+                 $('#submit').val("Update");
+                 $('#exampleModalLabel').html("Update Record");                            
 
                  if(data.gender == 'male')
                  {
@@ -345,39 +373,39 @@ $(document).ready(function() {
                    $("#morning").prop("checked", true);
                  } else if(data.shift == 'evening'){
                    $("#evening").prop("checked", true)
-                 }               
-                 $('#exampleModal').modal('show');               
+                 }                           
+                 $('#exampleModal').modal('show');
 
             }
          });
       });
 
       //  ********** update data to database **********
-      $('#form').on('Update', function(e){
-            e.preventDefault();    
-            var formData = new FormData(this);
-            console.log(this);
-            $.ajax({
-                url: "insert.php",
-                method: "POST",
-                data: formData,
-                processData: false, 
-                contentType: false,
-                cache: false,              
-                success: function(data) {
-                  console.log(data);
-                    if(data == 1){
-                      $('#form')[0].reset();
-                        $('#exampleModal').modal('hide');                           
-                        toastr.success('Record Updated Successfully');        
-                    }
-                    else{
-                        alert("Data Updation Failed");
-                        $('#exampleModal').modal('hide');                        
-                    }                             
-                }        
-            });
-        });         
+      // $('#form').on('submit', function(e){
+      //       e.preventDefault();    
+      //       var formData = new FormData(this);
+      //       console.log(this);
+      //       $.ajax({
+      //           url: "insert.php",
+      //           method: "POST",
+      //           data: formData,
+      //           processData: false, 
+      //           contentType: false,
+      //           cache: false,              
+      //           success: function(data) {
+      //             console.log(data);
+      //               if(data == 1){
+      //                 $('#form')[0].reset();
+      //                   $('#exampleModal').modal('hide');                           
+      //                   toastr.success('Record Updated Successfully');        
+      //               }
+      //               else{
+      //                   alert("Data Updation Failed");
+      //                   $('#exampleModal').modal('hide');                        
+      //               }                             
+      //           }        
+      //       });
+      //   });         
 
       //  ********** Delete data from database **********
       $("#example").delegate(".dlt-btn", "click", function(){
