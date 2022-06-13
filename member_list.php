@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Blank Page</title>
+    <title>Gym-List</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/icon.jpg">
     <!-- Custom Stylesheet -->
@@ -24,9 +24,18 @@
     <script src="plugins/online-toastr/toastr.js"></script>
 
     <style>
+      #mBody{
+        color: black;
+      }
       input[type=search] {
         border: 2px solid #ccc;
         border-radius: 4px;
+      }
+      .list-span{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: #6A5ACD;
       }
     </style>
 
@@ -96,8 +105,9 @@
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
                     <button class="btn btn-success add">Add</button>
+                    <span class="offset-5 list-span">Member List</span>                       
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="home.php">Dashboard</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0)">List</a></li>
                     </ol>
                 </div>
@@ -121,8 +131,7 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <!-- <tbody id="tbody">                  
-        </tbody> -->
+        
         <tfoot>
             <tr class="table-warning">
                 <th>ID</th>
@@ -136,9 +145,9 @@
                 <th>Action</th>
             </tr>
         </tfoot>
-    </table>
-                </div>
-            </div>
+     </table>
+    </div>
+</div>
     <!--******* Form Modal start **********-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -224,7 +233,26 @@
               </div>
             </div>
         </div>
-        <!-- Form modal ends -->      
+        <!-- Form modal ends --> 
+        
+        <!--******* View details Modal start **********-->
+          <!-- Modal -->
+          <div class="modal fade" id="view-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog mw-100 w-75">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLabel"><i class="fa fa-id-card mr-2" aria-hidden="true"></i>Member Details</h3>
+                </div>
+                <div class="modal-body" id="mBody">
+                 
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>                
+        <!--******* View details Modal start **********-->
 
             </div>
             <!-- #/ container -->
@@ -380,32 +408,22 @@ $(document).ready(function() {
          });
       });
 
-      //  ********** update data to database **********
-      // $('#form').on('submit', function(e){
-      //       e.preventDefault();    
-      //       var formData = new FormData(this);
-      //       console.log(this);
-      //       $.ajax({
-      //           url: "insert.php",
-      //           method: "POST",
-      //           data: formData,
-      //           processData: false, 
-      //           contentType: false,
-      //           cache: false,              
-      //           success: function(data) {
-      //             console.log(data);
-      //               if(data == 1){
-      //                 $('#form')[0].reset();
-      //                   $('#exampleModal').modal('hide');                           
-      //                   toastr.success('Record Updated Successfully');        
-      //               }
-      //               else{
-      //                   alert("Data Updation Failed");
-      //                   $('#exampleModal').modal('hide');                        
-      //               }                             
-      //           }        
-      //       });
-      //   });         
+      //  ********** View modal start here **********
+      $(document).on('click', '.view-btn', function(e){
+            e.preventDefault();
+            var id = $(this).data('vid');
+            $.ajax({
+                url : "fetch.php?viewId="+id,
+                type : "GET",
+                data : {viewId:id},
+                success:function(data){ 
+                  console.log(data); 
+                   $(".modal-body").html(data);
+                   $('#view-modal').modal('show');
+                  
+                }
+            });
+        });         
 
       //  ********** Delete data from database **********
       $("#example").delegate(".dlt-btn", "click", function(){

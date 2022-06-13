@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Dashboard-Report</title>
+    <title>Gym-Report</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/icon.jpg">
     <!-- Custom Stylesheet -->
@@ -28,6 +28,12 @@
                  background-color: #fff;
                  color:black
          }
+         .list-span{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: #6A5ACD;
+      }
     </style>
 
 </head>
@@ -95,8 +101,9 @@
 
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
+                <span class="offset-5 list-span">Member Report</span>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="home.php">Dashboard</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0)">Report</a></li>
                     </ol>
                 </div>
@@ -105,7 +112,7 @@
 
             <div class="container-fluid">
          
-         <div class="row" style="">
+         <div class="row">
                <div class="mr-auto col-2">
                     <p class="brnd">Extreme Soft</p>
                </div>

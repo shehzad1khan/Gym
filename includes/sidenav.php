@@ -23,6 +23,11 @@
                </a>
             </li>
             <li>
+               <a href="packages.php" aria-expanded="false">
+                 <i class="fa fa-cubes icon" aria-hidden="true"></i><span class="nav-text">Packages</span>
+               </a>
+            </li>
+            <li>
                <a href="report.php" aria-expanded="false">
                  <i class="fa fa-address-card icon" aria-hidden="true"></i><span class="nav-text">Member_Report</span>
                </a>
