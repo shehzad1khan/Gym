@@ -142,9 +142,43 @@ if(isset($_GET['viewId'])){
            </div>
         </div>
   ';     
-       echo $html;
- 
-}
+       echo $html; 
+  }
+
+  /// package table code start /// 
+  if(isset($_GET['loadPackage']))
+{
+  $sql = "SELECT * FROM `packages`";
+  $query = mysqli_query($link, $sql);    
+    $count = 1;
+    while($row = mysqli_fetch_array($query)){
+
+ //Package edit Button
+ $updateButton = '<a href="#" class="edit-btn text-info" data-eid="'.$row['id'].'"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
+            
+ //package Delete Button
+ $deleteButton = '<a href="#" class="dlt-btn text-danger" data-did="'.$row['id'].'"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+
+ $action = $updateButton." ".$deleteButton;
+
+        $array[] = array(
+          "id" => $count,
+          "package" => $row['package'],
+          "description" => $row['description'],
+          "amount" => $row['amount'],
+          "action" => $action
+        );
+        $count++;
+       }    
+        $dataset = array(
+          "echo" => 1,
+          "totalrecords" => count($array),
+          "totaldisplayrecords" => count($array),
+          "data" => $array
+      );
+         echo json_encode($dataset);
+    }   
+
 
 
 ?>

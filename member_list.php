@@ -244,7 +244,8 @@
                   <h3 class="modal-title" id="exampleModalLabel"><i class="fa fa-id-card mr-2" aria-hidden="true"></i>Member Details</h3>
                 </div>
                 <div class="modal-body" id="mBody">
-                 
+
+                </div>                 
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>
