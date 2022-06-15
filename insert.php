@@ -19,7 +19,8 @@
    
    //  ********* Insert Data to database ***********
 if($_POST['action'] == 'insert'){
-   $sql = "INSERT into members(name, age, address, contact, email, gender, shift, image) VALUES('$name','$age','$address','$contact','$email','$gender','$shift','$image')";
+   $date = date('Y-m-d');
+   $sql = "INSERT into members(name, age, address, contact, email, gender, shift, image, date) VALUES('$name','$age','$address','$contact','$email','$gender','$shift','$image', '$date')";
    $query = mysqli_query($link, $sql);
    move_uploaded_file($_FILES['image']['tmp_name'], $target);
    if($query){

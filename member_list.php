@@ -37,6 +37,18 @@
         font-weight: bold;
         color: #6A5ACD;
       }
+      #example tr td{
+        font-size: 15px;
+        color: black;
+        font-weight: bold;
+
+      }
+      thead, tfoot{
+        background-color: #BBa;
+        color: #000;
+        font-size: 18px;
+        text-align: left !important;
+      }
     </style>
 
 </head>
@@ -100,7 +112,7 @@
         <!--**********************************
             Content body start
         ***********************************-->
-        <div class="content-body">
+        <div class="content-body">         
 
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
@@ -372,7 +384,8 @@ $(document).ready(function() {
              url : "fetch.php?editId="+id,
              type : "GET",
              dataType : "json",
-             success:function(data){  
+             success:function(data){ 
+              console.log(data); 
                var img = data.image;                                                     
                  $('#id').val(data.id);
                  $('#name').val(data.name);

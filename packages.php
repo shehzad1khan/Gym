@@ -9,13 +9,18 @@
     if($_POST['action'] == 'insert'){
         $sql = "INSERT into packages(package, description, amount) VALUES('$packname','$packdesc','$packamount')";
         $query = mysqli_query($link, $sql);
-        echo ($query);
-        die();
         if($query){
             echo 1;
-        }else{
-            echo 0;
-        }      
+        }    
+    }
+
+    if($_POST['action'] == 'update'){
+        $id = $_POST['id'];
+        $sql = "UPDATE packages set package = '$packname', description = '$packdesc', amount = '$packamount' where id = '$id'";
+        $query = mysqli_query($link, $sql);;
+        if($query){
+           echo 2;
+        } 
     }
       
 
@@ -61,8 +66,11 @@
         font-size: 18px;
         text-align: left !important;
       }
-      table{
-            
+      .list-span{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: #6A5ACD;
       }
     </style>
 
@@ -131,6 +139,7 @@
 
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
+                <span class="offset-5 list-span">Packages Details</span>  
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="home.php">Dashboard</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0)">Packages</a></li>
@@ -158,7 +167,7 @@
                          <input type="number" class="form-control" name="amount" id="amount" required>
                     </div>                    
                     <div class="col-12">
-                         <button type="submit" class="btn btn-block btn-primary" name="submit" id="submit">Submit</button>
+                        <input type="submit" class="btn btn-block btn-primary" name="submit" id="submit" value="SUBMIT">
                     </div>
                </form>
           </div>
@@ -240,24 +249,64 @@ $(document).ready(function() {
             {data: 'action'}
         ]
      });
-
+// ****** insert data ***********
     $('#form').on('submit', function(e) {
         e.preventDefault();
         $.ajax({
             url : "packages.php",
             type: "POST",
             data: $("#form").serialize(),
-            success: function(data) {               
-                if(data == 1){               
-                toastr.success('Package Created Successfully');
+            success: function(data) {
+                if(data == '1'){
+                  toastr.success('Package Added successfully');               
                 $('#form')[0].reset();
                 var table = $('#example').DataTable(); 
                   table.ajax.reload( null, true );
-                }
-            },      
-        });
-             
+                }else{
+                    toastr.success('Package updated successfully');
+                    $('#form')[0].reset();
+                var table = $('#example').DataTable(); 
+                  table.ajax.reload( null, true );
+                }                           
+            }
+        });             
     });
+// ******** Click edit button ***********
+    $(document).on('click', '.Pedit-btn', function() {
+        var id = $(this).data("peid");        
+        $.ajax({
+            url : "fetch.php?editPackage="+id,
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                $('#submit').val('UPDATE');
+                $('#id').val(data.id);
+                $('#package').val(data.package);
+                $('#desc').val(data.description);
+                $('#amount').val(data.amount);
+                $('#action').val('update');
+            }
+        })
+    });
+ //  ********** Delete data from database **********
+ $(document).on("click", ".pdlt-btn", function(){
+           if(confirm("Are you sure you want to delete this record?")){
+              var id = $(this).data("pdid");
+              var something = $(this);             
+               $.ajax({
+                url : "delete.php?packageId="+id,
+                type : "GET",                
+                success : function(data){
+                  if(data == 1){
+                    $(something).closest("tr").fadeOut(1000);
+                    toastr.error('Record Deleted Successfully');
+                  }
+                }
+              });
+            }
+          });;
+
 
  });
 </script>

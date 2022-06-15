@@ -20,7 +20,7 @@ if(isset($_GET['loadData']))
  // View Button
  $viewButton = '<a href="#" class="view-btn text-success" data-vid="'.$row['id'].'"><i class="fa fa-eye" aria-hidden="true"></i></a>';
 
- $action = $updateButton." ".$deleteButton." ".$viewButton;
+ $action = $viewButton." ".$updateButton."  ".$deleteButton;
 
         $array[] = array(
           "id" => $row['id'],
@@ -31,6 +31,7 @@ if(isset($_GET['loadData']))
           "email" => $row['email'],
           "gender" => $row['gender'],
           "shift" => $row['shift'],
+          "date" => $row['date'],
           "action" => $action
         );
         $count++;
@@ -49,8 +50,7 @@ if(isset($_GET['editId'])){
   $id = $_GET['editId'];
   $sql = "SELECT * from `members` where `id` = '$id'";
   $query = mysqli_query($link, $sql);
-  $row = mysqli_fetch_array($query);  
-   
+  $row = mysqli_fetch_array($query);   
   $array = array(
     'id' => $row['id'],
     'name' => $row['name'],
@@ -108,6 +108,7 @@ if(isset($_GET['viewId'])){
               <b class="d-inline">Email :</b> <p class="d-inline p-email">'.$row["email"].'</p> <br>
               <b class="d-inline">Gender :</b> <p class="d-inline p-gender">'.$row["gender"].'</p> <br>
               <b class="d-inline">Shift :</b> <p class="d-inline p-shift">'.$row["shift"].'</p> <br>            
+              <b class="d-inline">Joining Date :</b> <p class="d-inline p-date">'.$row["date"].'</p> <br>            
           </div>  
        ';
   $html .= '
@@ -154,10 +155,10 @@ if(isset($_GET['viewId'])){
     while($row = mysqli_fetch_array($query)){
 
  //Package edit Button
- $updateButton = '<a href="#" class="edit-btn text-info" data-eid="'.$row['id'].'"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
+ $updateButton = '<a href="#" class="Pedit-btn text-info" data-peid="'.$row['id'].'"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
             
  //package Delete Button
- $deleteButton = '<a href="#" class="dlt-btn text-danger" data-did="'.$row['id'].'"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+ $deleteButton = '<a href="#" class="pdlt-btn text-danger" data-pdid="'.$row['id'].'"><i class="fa fa-trash" aria-hidden="true"></i></a>';
 
  $action = $updateButton." ".$deleteButton;
 
@@ -165,7 +166,7 @@ if(isset($_GET['viewId'])){
           "id" => $count,
           "package" => $row['package'],
           "description" => $row['description'],
-          "amount" => $row['amount'],
+          "amount" => number_format($row['amount'],2),
           "action" => $action
         );
         $count++;
@@ -177,7 +178,23 @@ if(isset($_GET['viewId'])){
           "data" => $array
       );
          echo json_encode($dataset);
-    }   
+    } 
+    
+    // ****** Update Package *********
+if(isset($_GET['editPackage'])){
+  $id = $_GET['editPackage'];
+  $sql = "SELECT * from `packages` where `id` = '$id'";
+  $query = mysqli_query($link, $sql);
+  $row = mysqli_fetch_array($query);  
+   
+  $array = array(
+    'id' => $row['id'],
+    'package' => $row['package'],
+    'description' => $row['description'],
+    'amount' => $row['amount'],
+  );
+  echo json_encode($array);
+}
 
 
 
