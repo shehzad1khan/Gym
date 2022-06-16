@@ -28,6 +28,16 @@
                </a>
             </li>
             <li>
+               <a href="plans.php" aria-expanded="false">
+                 <i class="fa fa-pie-chart icon" aria-hidden="true"></i><span class="nav-text">Plans</span>
+               </a>
+            </li>
+            <li>
+               <a href="trainers.php" aria-expanded="false">
+                 <i class="fa fa-user-secret icon" aria-hidden="true"></i><span class="nav-text">Trainers</span>
+               </a>
+            </li>
+            <li>
                <a href="report.php" aria-expanded="false">
                  <i class="fa fa-address-card icon" aria-hidden="true"></i><span class="nav-text">Member_Report</span>
                </a>

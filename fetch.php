@@ -4,6 +4,8 @@ session_start();
 if(!isset($_SESSION['userid']))
 header('location:login.php');
 
+// ********* load member table ***********
+
 if(isset($_GET['loadData']))
 {
   $sql = "SELECT * FROM `members` ORDER BY `members`.`id` DESC";
@@ -43,7 +45,7 @@ if(isset($_GET['loadData']))
           "data" => $array
       );
          echo json_encode($dataset);
-    }   
+    } 
 
 // ****** Update Record *********
 if(isset($_GET['editId'])){
@@ -179,6 +181,74 @@ if(isset($_GET['viewId'])){
       );
          echo json_encode($dataset);
     } 
+
+    /// Plans table code start /// 
+  if(isset($_GET['loadPlans']))
+  {
+    $sql = "SELECT * FROM `plans`";
+    $query = mysqli_query($link, $sql);    
+      $count = 1;
+      while($row = mysqli_fetch_array($query)){
+  
+   //Plan edit Button
+   $updateButton = '<a href="#" class="pledit-btn text-info" data-plid="'.$row['id'].'"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
+              
+   //Plan Delete Button
+   $deleteButton = '<a href="#" class="pldlt-btn text-danger" data-pldid="'.$row['id'].'"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+  
+   $action = $updateButton." ".$deleteButton;
+  
+          $array[] = array(
+            "id" => $count,
+            "plan" => $row['plan'].' month/s',
+            "amount" => '<i class="fa fa-usd pr-2"></i>'.number_format($row['amount'],2),
+            "action" => $action
+          );
+          $count++;
+         }    
+          $dataset = array(
+            "echo" => 1,
+            "totalrecords" => count($array),
+            "totaldisplayrecords" => count($array),
+            "data" => $array
+        );
+           echo json_encode($dataset);
+      } 
+
+      /// Trainers table code start /// 
+  if(isset($_GET['loadTrainer']))
+  {
+    $sql = "SELECT * FROM `trainers`";
+    $query = mysqli_query($link, $sql);    
+      $count = 1;
+      while($row = mysqli_fetch_array($query)){
+  
+   //Trainer edit Button
+   $updateButton = '<a href="#" class="tredit-btn text-info ml-3 pr-2" data-trid="'.$row['id'].'"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
+              
+   //Trainer Delete Button
+   $deleteButton = '<a href="#" class="trdlt-btn text-danger" data-trdid="'.$row['id'].'"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+  
+   $action = $updateButton." ".$deleteButton;
+  
+          $array[] = array(
+            "id" => $count,
+            "information" =>'<i class="fa fa-user pr-2 mb-2"></i>'.$row['name'].'<br>
+                            <i class="fa fa-phone pr-2 mb-2"></i>'.$row['contact'].'<br>
+                            <i class="fa fa-envelope pr-2 mb-2"></i>'.$row['email'].'<br>
+                            <i class="fa fa-usd pr-2 mb-2"></i>'.$row['rate'],
+            "action" => $action 
+          );
+          $count++;
+         }    
+          $dataset = array(
+            "echo" => 1,
+            "totalrecords" => count($array),
+            "totaldisplayrecords" => count($array),
+            "data" => $array
+        );
+           echo json_encode($dataset);
+      } 
     
     // ****** Update Package *********
 if(isset($_GET['editPackage'])){
@@ -192,6 +262,37 @@ if(isset($_GET['editPackage'])){
     'package' => $row['package'],
     'description' => $row['description'],
     'amount' => $row['amount'],
+  );
+  echo json_encode($array);
+}
+
+ // ****** Update plans *********
+ if(isset($_GET['editPlan'])){
+  $id = $_GET['editPlan'];
+  $sql = "SELECT * from `plans` where `id` = '$id'";
+  $query = mysqli_query($link, $sql);
+  $row = mysqli_fetch_array($query);  
+   
+  $array = array(
+    'id' => $row['id'],
+    'plan' => $row['plan'],
+    'amount' => $row['amount'],
+  );
+  echo json_encode($array);
+}
+// ****** Update Trianer *********
+if(isset($_GET['editTrainee'])){
+  $id = $_GET['editTrainee'];
+  $sql = "SELECT * from `trainers` where `id` = '$id'";
+  $query = mysqli_query($link, $sql);
+  $row = mysqli_fetch_array($query);  
+   
+  $array = array(
+    'id' => $row['id'],
+    'name' => $row['name'],
+    'contact' => $row['contact'],
+    'email' => $row['email'],
+    'rate' => $row['rate'],
   );
   echo json_encode($array);
 }
