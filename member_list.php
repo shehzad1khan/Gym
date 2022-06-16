@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Blank Page</title>
+    <title>Gym-List</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/icon.jpg">
     <!-- Custom Stylesheet -->
@@ -24,9 +24,30 @@
     <script src="plugins/online-toastr/toastr.js"></script>
 
     <style>
+      #mBody{
+        color: black;
+      }
       input[type=search] {
         border: 2px solid #ccc;
         border-radius: 4px;
+      }
+      .list-span{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: #6A5ACD;
+      }
+      #example tr td{
+        font-size: 15px;
+        color: black;
+        font-weight: bold;
+
+      }
+      thead, tfoot{
+        background-color: #BBa;
+        color: #000;
+        font-size: 18px;
+        text-align: left !important;
       }
     </style>
 
@@ -91,13 +112,14 @@
         <!--**********************************
             Content body start
         ***********************************-->
-        <div class="content-body">
+        <div class="content-body">         
 
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
                     <button class="btn btn-success add">Add</button>
+                    <span class="offset-5 list-span">Member List</span>                       
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="home.php">Dashboard</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0)">List</a></li>
                     </ol>
                 </div>
@@ -121,8 +143,7 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <!-- <tbody id="tbody">                  
-        </tbody> -->
+        
         <tfoot>
             <tr class="table-warning">
                 <th>ID</th>
@@ -136,9 +157,9 @@
                 <th>Action</th>
             </tr>
         </tfoot>
-    </table>
-                </div>
-            </div>
+     </table>
+    </div>
+</div>
     <!--******* Form Modal start **********-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -152,7 +173,8 @@
                 <!-- --Dailog Form Tag-- -->
                 <div class="modal-body">
                   <form method="POST" action="#" id="form" enctype="multipart/form-data">
-                  <input type="hidden" name="recordId" id="uid">
+                  <input type="hidden" name="id" value="0" id="id">
+                    <input type="hidden" name="action" value="insert" id="action">
                     <div class="form-row">
                       <div class="col">
                         <label for="name" class="col-form-label">Name:</label>
@@ -206,12 +228,13 @@
                         </div>
                       </div>
                     <div class="form-row">
-                    <div class="col" id="file-div">
-                      <label for="image" class="col-form-label">Picture:</label>
-                      <input type="file" id="image" class="form-control" name="image">
-                      <input type="hidden" name="image2" id="image2">                      
+                      <div class="col" id="file-div">
+                        <label for="image" class="col-form-label">Picture:</label>
+                        <input type="file" onchange="previewFile(this);" id="image" class="form-control" name="image">
+                        <input type="hidden" name="image2" id="image2">                      
+                      </div>
                     </div>
-                    </div>
+                    <img id="previewImg" src="images/placeholder-img.png" alt="img" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
                     <div class="form-group mr-auto mt-2">
                       <input type="submit" class="btn btn-success offset-9" name="submit" value="Submit" id="submit">
                       <button type="button" class="btn btn-danger ml-2" data-bs-dismiss="modal">Close</button>
@@ -222,7 +245,27 @@
               </div>
             </div>
         </div>
-        <!-- Form modal ends -->      
+        <!-- Form modal ends --> 
+        
+        <!--******* View details Modal start **********-->
+          <!-- Modal -->
+          <div class="modal fade" id="view-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog mw-100 w-75">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLabel"><i class="fa fa-id-card mr-2" aria-hidden="true"></i>Member Details</h3>
+                </div>
+                <div class="modal-body" id="mBody">
+
+                </div>                 
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>                
+        <!--******* View details Modal start **********-->
 
             </div>
             <!-- #/ container -->
@@ -259,6 +302,21 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- ******** Script start ********* -->
+<script>
+  function previewFile(input){
+      var file = $("input[type=file]").get(0).files[0];
+
+      if(file){
+          var reader = new FileReader();
+
+          reader.onload = function(){
+              $("#previewImg").attr("src", reader.result);
+          }
+
+          reader.readAsDataURL(file);
+      }
+  }
+</script>
     <script>
 $(document).ready(function() {           
         $('#example').DataTable({
@@ -282,9 +340,14 @@ $(document).ready(function() {
     });
 
        $('.add').on('click', function() {
-            $('#exampleModal').modal('show');
-            $('#submit').val("Submit");
-            $('#form')[0].reset();
+        $('#form')[0].reset();
+        $('#exampleModal').modal('show');
+        $('#action').val('insert');
+        $('#id').val('0');
+        $('#exampleModalLabel').html("Add Record");
+        $('#submit').val("Submit");
+        $('#previewImg').attr("src", "db_images/members/placeholder-img.png");
+             
         });
        
     // ******* insert data *********    
@@ -299,19 +362,12 @@ $(document).ready(function() {
                 contentType: false,
                 cache: false,              
                 success: function(data) {
-                    if(data == 1){
-                      var table = $('#example').DataTable(); 
-                      table.ajax.reload( null, false );
-                      $('#form')[0].reset();
-                        $('#exampleModal').modal('hide');
-                        loadtable();    
-                        toastr.success('Record Inserted Successfully');        
-                    }
-                    else{
-                        alert("Data Inserted Failed");
-                        $('#exampleModal').modal('hide');
-                        
-                    }                             
+                  toastr.success(data);
+                  var table = $('#example').DataTable(); 
+                  table.ajax.reload( null, false );
+                  $('#form')[0].reset();
+                  $('#exampleModal').modal('hide');   
+                                                   
                 }        
             });
         });
@@ -319,20 +375,34 @@ $(document).ready(function() {
       $(document).on('click','.edit-btn', function(){
         $('#form')[0].reset();
          var id = $(this).data('eid');
-         $('#submit').val("Update");
+          $('#submit').val("Update");
+          var $image = $('#previewImg');
+          $image.removeAttr('src').replaceWith($image.clone());
+             
          $('#exampleModalLabel').html("Update Record");          
          $.ajax({
              url : "fetch.php?editId="+id,
              type : "GET",
              dataType : "json",
-             success:function(data){                                                       
+             success:function(data){ 
+              console.log(data); 
+               var img = data.image;                                                     
+                 $('#id').val(data.id);
                  $('#name').val(data.name);
                  $('#age').val(data.age);
                  $('#address').val(data.address);
                  $('#contact').val(data.contact);
                  $('#email').val(data.email);                
                  $('#shift').val(data.shift);
-                 $('#image').attr('src', 'data.image');                 
+                 if(img == null || img == ""){
+                   $('#previewImg').attr("src", "db_images/members/placeholder-img.png");  
+                  }
+                  else{
+                    $("#previewImg").attr("src", "db_images/members/"+img);
+                  }
+                 $('#action').val('update');
+                 $('#submit').val("Update");
+                 $('#exampleModalLabel').html("Update Record");                            
 
                  if(data.gender == 'male')
                  {
@@ -345,37 +415,27 @@ $(document).ready(function() {
                    $("#morning").prop("checked", true);
                  } else if(data.shift == 'evening'){
                    $("#evening").prop("checked", true)
-                 }               
-                 $('#exampleModal').modal('show');               
+                 }                           
+                 $('#exampleModal').modal('show');
 
             }
          });
       });
 
-      //  ********** update data to database **********
-      $('#form').on('Update', function(e){
-            e.preventDefault();    
-            var formData = new FormData(this);
-            console.log(this);
+      //  ********** View modal start here **********
+      $(document).on('click', '.view-btn', function(e){
+            e.preventDefault();
+            var id = $(this).data('vid');
             $.ajax({
-                url: "insert.php",
-                method: "POST",
-                data: formData,
-                processData: false, 
-                contentType: false,
-                cache: false,              
-                success: function(data) {
-                  console.log(data);
-                    if(data == 1){
-                      $('#form')[0].reset();
-                        $('#exampleModal').modal('hide');                           
-                        toastr.success('Record Updated Successfully');        
-                    }
-                    else{
-                        alert("Data Updation Failed");
-                        $('#exampleModal').modal('hide');                        
-                    }                             
-                }        
+                url : "fetch.php?viewId="+id,
+                type : "GET",
+                data : {viewId:id},
+                success:function(data){ 
+                  console.log(data); 
+                   $(".modal-body").html(data);
+                   $('#view-modal').modal('show');
+                  
+                }
             });
         });         
 
