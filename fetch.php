@@ -114,9 +114,9 @@ if(isset($_GET['viewId'])){
           </div>  
        ';
   $html .= '
-           <div class="float-right col-md-7">
+           <div class="float-right col-md-7 col-sm-7">
            <large><b>Membership Plan Details</b></large>
-            <table class="table table-bordered">
+            <table class="table table-bordered table-responsive" style="width:100%;">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -233,10 +233,10 @@ if(isset($_GET['viewId'])){
   
           $array[] = array(
             "id" => $count,
-            "information" =>'<i class="fa fa-user pr-2 mb-2"></i>'.$row['name'].'<br>
-                            <i class="fa fa-phone pr-2 mb-2"></i>'.$row['contact'].'<br>
-                            <i class="fa fa-envelope pr-2 mb-2"></i>'.$row['email'].'<br>
-                            <i class="fa fa-usd pr-2 mb-2"></i>'.$row['rate'],
+            "information" =>'<i class="fa fa-user pr-2 mb-2 text-info"></i>'.$row['name'].'<br>
+                            <i class="fa fa-phone pr-2 mb-2 text-success"></i>'.$row['contact'].'<br>
+                            <i class="fa fa-envelope pr-2 mb-2 text-warning"></i>'.$row['email'].'<br>
+                            <i class="fa fa-usd pr-2 mb-2 text-danger"></i>'.$row['rate'],
             "action" => $action 
           );
           $count++;

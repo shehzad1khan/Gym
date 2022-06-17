@@ -185,9 +185,9 @@
      <h3 class="m-auto"><i class="fa fa-list pr-2"></i>Trainers List</h3>
         <thead>
             <tr class="">
-                <th>ID</th>
-                <th>Trainer Information</th>
-                <th>Actions</th>
+                <th class="col-1">ID</th>
+                <th class="col-5">Trainer Information</th>
+                <th class="col-2">Actions</th>
             </tr>
         </thead>
         
@@ -235,7 +235,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
-$(document).ready(function() {
+$(document).ready(function() {    
      $('#example').DataTable({
         order: [[0, 'asc']],
         "processing": false,
@@ -246,8 +246,12 @@ $(document).ready(function() {
         "columns": [
             {data: 'id'},
             {data: 'information'},
-            {data: 'action'}
-        ]
+            {data: 'action'},
+        ],
+        // "columns": [
+        //     { className: 'text-center', targets: [0, 1, 2] },
+        //     // { className: 'text-center', targets: [5] },
+        //     ],
      });
 // ****** insert data ***********
     $('#form').on('submit', function(e) {
@@ -262,12 +266,13 @@ $(document).ready(function() {
                 $('#form')[0].reset();
                 var table = $('#example').DataTable(); 
                   table.ajax.reload( null, true );
-                }else{
+                }
+                if(data == '2'){
                     toastr.success('Trainer Data Updated Successfully');
                     $('#form')[0].reset();
-                var table = $('#example').DataTable(); 
-                  table.ajax.reload( null, true );
-                }                           
+                    var table = $('#example').DataTable(); 
+                    table.ajax.reload( null, true );
+                }                          
             }
         });             
     });

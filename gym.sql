@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2022 at 02:52 PM
+-- Generation Time: Jun 17, 2022 at 02:46 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -93,7 +93,6 @@ INSERT INTO `members` (`id`, `name`, `contact`, `address`, `age`, `email`, `gend
 (72, 'Shehzad', '03075709661', 'Landikotal', 23, 'shehzadshinwari100@gmail.com', 'male', 'evening', '', NULL),
 (73, 'fsdfs', 'dsf23423423', '34wrefsdaf', 34, 'amiir@gamil.com', 'male', 'morning', '', NULL),
 (74, 'fsdfs', 'dsf23423423', '34wrefsdaf', 34, 'amiir@gamil.com', 'male', 'morning', '', NULL),
-(75, 'fsdfs', 'dsf23423423', '34wrefsdaf', 34, 'amiir@gamil.com', 'male', 'morning', '', NULL),
 (78, 'fsdfs', 'dsf23423423', '34wrefsdaf', 34, 'amiir@gamil.com', 'male', 'evening', '', NULL),
 (79, 'Ali khan', '03028182283', 'Pashawar Pakistan', 23, 'Ali@gmail.com', 'male', 'morning', 't-2.png', NULL),
 (80, 'haya', '030212458574', 'Shenpukh Lalazaar', 54, 'jabir@gmail.com', 'female', 'morning', 'neil-soni-6wdRuK7bVTE-unsplash.jpg', NULL),
@@ -128,6 +127,51 @@ INSERT INTO `packages` (`id`, `package`, `description`, `amount`) VALUES
 (12, 'Platinum', 'Trainer Tips + Use Of Every Machine And Dumbles', 3000),
 (13, 'Free', 'Only Basic Exercise', 0);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `plans`
+--
+
+CREATE TABLE `plans` (
+  `id` int(100) NOT NULL,
+  `plan` int(100) DEFAULT NULL,
+  `amount` int(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `plans`
+--
+
+INSERT INTO `plans` (`id`, `plan`, `amount`) VALUES
+(1, 3, 2000),
+(3, 6, 4000),
+(4, 9, 6000),
+(5, 12, 8000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trainers`
+--
+
+CREATE TABLE `trainers` (
+  `id` int(100) NOT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `contact` varchar(200) DEFAULT NULL,
+  `email` varchar(200) DEFAULT NULL,
+  `rate` int(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `trainers`
+--
+
+INSERT INTO `trainers` (`id`, `name`, `contact`, `email`, `rate`) VALUES
+(1, 'Jawad', '03060301227', 'jawadkhan@gmail.com', 6000),
+(2, 'Shams', '03023154987', 'shams@gmail.com', 7000),
+(3, 'Shehzad khan', '03075709661', 'shehzad@gmail.com', 8000);
+
 --
 -- Indexes for dumped tables
 --
@@ -151,6 +195,18 @@ ALTER TABLE `packages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `plans`
+--
+ALTER TABLE `plans`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `trainers`
+--
+ALTER TABLE `trainers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -171,6 +227,18 @@ ALTER TABLE `members`
 --
 ALTER TABLE `packages`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
+--
+-- AUTO_INCREMENT for table `plans`
+--
+ALTER TABLE `plans`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `trainers`
+--
+ALTER TABLE `trainers`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

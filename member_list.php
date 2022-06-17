@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="./plugins/datatables/jquery.dataTables.min.css"> 
       <!-- Toaster CSS -->
       <link href="./plugins/toastr/css/toastr.min.css" rel="stylesheet">
-      <!-- font awesome offline links -->
-     <link href="./icons/font-awesome/css/font-awesome.min.css" rel="stylesheet"> 
+      <!-- font awesome online links -->
+      <script src="https://kit.fontawesome.com/84c83fa783.js" crossorigin="anonymous"></script> 
 
     <link  href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 

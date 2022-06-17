@@ -1,3 +1,7 @@
+<?php 
+ include('config.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +14,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/icon.jpg">
     <!-- Custom Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/84c83fa783.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -88,48 +93,84 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-1">
                             <div class="card-body">
-                                <h3 class="card-title text-white">Products Sold</h3>
+                                <h3 class="card-title text-white">Today Joining</h3>
                                 <div class="d-inline-block">
-                                    <h2 class="text-white">4565</h2>
+                                   <?php
+                                    $sql = "SELECT * FROM `members` WHERE `date` = CURDATE()";
+                                    $result = mysqli_query($link, $sql);
+                                    $count = mysqli_num_rows($result);
+                                    if($count > 0){
+                                       echo '<h2 class="text-white">'.$count.'</h2>';
+                                    }else{
+                                        echo '<h2 class="text-white">0</h2>';
+                                    }
+                                   ?>
                                     <p class="text-white mb-0">Jan - March 2019</p>
                                 </div>
-                                <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
+                                <span class="float-right display-5 opacity-5"><i class="fa fa-handshake-o fa-shake" style="--fa-animation-duration: 10s; color:yellow"></i></span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-2">
                             <div class="card-body">
-                                <h3 class="card-title text-white">Net Profit</h3>
+                                <h3 class="card-title text-white">Weekly Joining</h3>
                                 <div class="d-inline-block">
-                                    <h2 class="text-white">$ 8541</h2>
+                                <?php
+                                    $sql = "SELECT * FROM `members` WHERE `date` Between CURDATE() - INTERVAL 7 DAY AND CURDATE()";
+                                    $result = mysqli_query($link, $sql);
+                                    $count = mysqli_num_rows($result);
+                                    if($count > 0){
+                                       echo '<h2 class="text-white">'.$count.'</h2>';
+                                    }else{
+                                        echo '<h2 class="text-white">0</h2>';
+                                    }
+                                ?>
                                     <p class="text-white mb-0">Jan - March 2019</p>
                                 </div>
-                                <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
+                                <span class="float-right display-5 opacity-5"><i class="fa-brands fa-weebly fa-flip" style="--fa-animation-duration: 10s; color:yellow"></i></span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-3">
                             <div class="card-body">
-                                <h3 class="card-title text-white">New Customers</h3>
+                                <h3 class="card-title text-white">Monthly Joining</h3>
                                 <div class="d-inline-block">
-                                    <h2 class="text-white">4565</h2>
+                                <?php
+                                    $sql = "SELECT * FROM `members` WHERE `date` Between CURDATE() - INTERVAL 30 DAY AND CURDATE()";
+                                    $result = mysqli_query($link, $sql);
+                                    $count = mysqli_num_rows($result);
+                                    if($count > 0){
+                                       echo '<h2 class="text-white">'.$count.'</h2>';
+                                    }else{
+                                        echo '<h2 class="text-white">0</h2>';
+                                    }
+                                ?>
                                     <p class="text-white mb-0">Jan - March 2019</p>
                                 </div>
-                                <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+                                <span class="float-right display-5 opacity-5"><i class="fa-regular fa-m fa-spin" style="--fa-animation-duration: 10s; color:yellow"></i></span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-4">
                             <div class="card-body">
-                                <h3 class="card-title text-white">Customer Satisfaction</h3>
+                                <h3 class="card-title text-white">Total Members</h3>
                                 <div class="d-inline-block">
-                                    <h2 class="text-white">99%</h2>
+                                <?php
+                                    $sql = "SELECT * FROM `members`";
+                                    $result = mysqli_query($link, $sql);
+                                    $count = mysqli_num_rows($result);
+                                    if($count > 0){
+                                       echo '<h2 class="text-white">'.$count.'</h2>';
+                                    }else{
+                                        echo '<h2 class="text-white">0</h2>';
+                                    }
+                                ?>
                                     <p class="text-white mb-0">Jan - March 2019</p>
                                 </div>
-                                <span class="float-right display-5 opacity-5"><i class="fa fa-heart"></i></span>
+                                <span class="float-right display-5 opacity-5"><i class="fa-solid fa-person-through-window fa-beat-fade"></i></span>
                             </div>
                         </div>
                     </div>
