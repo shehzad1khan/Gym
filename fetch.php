@@ -31,8 +31,8 @@ if(isset($_GET['loadData']))
           "address" => $row['address'],
           "contact" => $row['contact'],
           "email" => $row['email'],
-          "gender" => $row['gender'],
-          "shift" => $row['shift'],
+          "gender" => ucfirst($row['gender']),
+          "shift" => ucfirst($row['shift']),
           "date" => $row['date'],
           "action" => $action
         );
@@ -73,7 +73,7 @@ if(isset($_POST['search'])){
   $query = mysqli_query($link, $sql);
   $count = 1;
   $output = "";
-  if($row = mysqli_num_rows($query) > 0){
+  if(mysqli_num_rows($query) > 0){
     while($row = mysqli_fetch_array($query)){
       $output .= '
       <tr>
@@ -102,7 +102,7 @@ if(isset($_GET['viewId'])){
  
   $html = '
         <div class="row">
-          <div class="float-left col-md-5">            
+          <div class="float-left col-md-4">            
               <b class="d-inline">Name :</b> <p class="d-inline p-name">'.$row["name"].'</p> <br>
               <b class="d-inline">Age :</b> <p class="d-inline  p-age">'.$row["age"].'</p> <br>
               <b class="d-inline">Address :</b> <p class="d-inline p-address">'.$row["address"].'</p> <br>
@@ -114,9 +114,9 @@ if(isset($_GET['viewId'])){
           </div>  
        ';
   $html .= '
-           <div class="float-right col-md-7 col-sm-7">
+           <div class="float-right col-md-8 col-sm-8">
            <large><b>Membership Plan Details</b></large>
-            <table class="table table-bordered table-responsive" style="width:100%;">
+            <table class="table table-responsive table-responsive-lg" style="width:100%;">
               <thead>
                 <tr>
                   <th>ID</th>

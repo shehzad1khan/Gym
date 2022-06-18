@@ -1,6 +1,6 @@
+<?php include "config.php" ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -201,32 +201,64 @@
                         <input type="email" id="email" class="input form-control" name="email">
                       </div>                      
                     </div>
+                    
                     <div class="form-row">
-                    <label class="offset-2 col-form-label">Gender :</label>                                       
-                    <label class="col-lg-2 col-form-label text-center" for="male">Male <span class="text-danger">* </span>:
-                        </label>
-                        <div class="col-lg-2">
-                        <input type="radio" class="form-check-input" name="gender" id="male" value="male">
-                        </div>                             
-                        <label class="col-lg-2 col-form-label" for="female">Female <span class="text-danger">* </span>:
-                        </label>
-                        <div class="col-lg-1">
-                            <input type="radio" class="form-check-input" id="female" name="gender" value="female">
-                        </div>
+                      <div class="col">
+                        <label class="col-form-label">Gender:</label>
+                          <select class="form-select form-select-lg custom-select" name="gender">
+                            <option disabled selected>Select Gender</option>
+                            <option class="" value="male" id="male">MALE</option>
+                            <option class="" value="female" id="female">FEMALE</option>
+                          </select>
                       </div>
-                      <div class="form-row ml-3">
-                    <label class="offset-2 col-form-label">Shift :</label>                                       
-                    <label class="col-lg-2 col-form-label text-center" for="morning">Morning <span class="text-danger">* </span>:
-                        </label>
-                        <div class="col-lg-2">
-                        <input type="radio" class="form-check-input" name="shift" id="morning" value="morning">
-                        </div>                             
-                        <label class="col-lg-2 col-form-label" for="evening">Evening <span class="text-danger">* </span> :
-                        </label>
-                        <div class="col-lg-1">
-                            <input type="radio" class="form-check-input" id="evening" name="shift" value="evening">
-                        </div>
+                      <div class="col">
+                        <label class="col-form-label">Shift:</label>
+                          <select class="form-select form-select-lg custom-select" name="shift">
+                            <option disabled selected>Select Shift</option>
+                            <option class="" value="morning" id="morning">Morning</option>
+                            <option class="" value="evening" id="evening">Evening</option>
+                          </select>
+                      </div>                      
+                    </div>
+                    <div class="form-row">
+                      <div class="col">
+                        <label class="col-form-label">Plans:</label>
+                          <?php 
+                            $sql = "SELECT * FROM plans";
+                            $result = mysqli_query($link, $sql);
+                          ?>
+                          <select class="form-select form-select-lg custom-select" name="plan">
+                            <option disabled selected>Select Plan</option>
+                            <?php while($row = mysqli_fetch_array($result)){ 
+                             echo '<option value="'.$row['id'].'" id="plan">'.$row['plan'].' Months</option>';
+                             } ?>
+                          </select>
                       </div>
+                      <div class="col">
+                        <label class="col-form-label">Packages:</label>
+                          <select class="form-select form-select-lg custom-select" name="package">
+                            <option disabled selected>Select Package</option>
+                          <?php 
+                            $sql = "SELECT * FROM packages";
+                            $result = mysqli_query($link, $sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                              echo'<option value="'.$row['id'].'" id="package">'.$row['package'].' &nbsp;&nbsp;&nbsp;&nbsp;RS = '.$row['amount'].'</option>';
+                            }?>
+                          </select>
+                      </div>  
+                      <div class="col">
+                        <label class="col-form-label">Trainers:</label>
+                          <select class="form-select form-select-lg custom-select" name="trainer">
+                            <option disabled selected>Select Trainer</option>
+                            <?php 
+                            $sql = "SELECT * FROM trainers";
+                            $result = mysqli_query($link, $sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                              echo '<option value="'.$row['id'].'" id="trainer">'.$row['name'].' &nbsp;&nbsp;&nbsp;&nbsp;<b>Fee</b> = '.$row['rate'].'</option>';
+                            }?>
+                          </select>
+                      </div>                    
+                    </div>
                     <div class="form-row">
                       <div class="col" id="file-div">
                         <label for="image" class="col-form-label">Picture:</label>
@@ -406,15 +438,15 @@ $(document).ready(function() {
 
                  if(data.gender == 'male')
                  {
-                   $('#male').prop("checked", true);
+                   $('#male').prop("selected", true);
                  }
                  else if(data.gender == 'female'){
-                  $('#female').prop("checked", true);
+                  $('#female').prop("selected", true);
                  } 
                  if(data.shift == 'morning'){
-                   $("#morning").prop("checked", true);
+                   $("#morning").prop("selected", true);
                  } else if(data.shift == 'evening'){
-                   $("#evening").prop("checked", true)
+                   $("#evening").prop("selected", true)
                  }                           
                  $('#exampleModal').modal('show');
 

@@ -15,12 +15,15 @@
    $email = mysqli_real_escape_string($link, $_POST['email']);
    $gender = mysqli_real_escape_string($link, $_POST['gender']);
    $shift = mysqli_real_escape_string($link, $_POST['shift']);
+   $plan = mysqli_real_escape_string($link, $_POST['plan']);
+   $package = mysqli_real_escape_string($link, $_POST['package']);
+   $trainer = mysqli_real_escape_string($link, $_POST['trainer']);
    $image = $_FILES['image']['name'];
    
    //  ********* Insert Data to database ***********
 if($_POST['action'] == 'insert'){
    $date = date('Y-m-d');
-   $sql = "INSERT into members(name, age, address, contact, email, gender, shift, image, date) VALUES('$name','$age','$address','$contact','$email','$gender','$shift','$image', '$date')";
+   $sql = "INSERT into members(name, age, address, contact, email, gender, shift, image, plan, package, trainer, date) VALUES('$name','$age','$address','$contact','$email','$gender','$shift','$image', '$plan', '$package', '$trainer', '$date')";
    $query = mysqli_query($link, $sql);
    move_uploaded_file($_FILES['image']['tmp_name'], $target);
    if($query){
