@@ -327,7 +327,6 @@
     <script src="plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="js/custom.min.js"></script>
     <script src="js/settings.js"></script>
-    <script src="js/settings.js"></script>
     <script src="js/gleek.js"></script>
     <script src="./js/dashboard/dashboard-1.js"></script>
     <script src="./js/bootsrap-icons/icons-5.1.3.js"></script>

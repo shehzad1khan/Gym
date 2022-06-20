@@ -43,6 +43,11 @@
                </a>
             </li>
             <li>
+               <a href="schedual.php" aria-expanded="false">
+               <i class="fa-solid fa-calendar-days icon"></i><span class="nav-text">Schedual</span>
+               </a>
+            </li>
+            <li>
                <a href="report.php" aria-expanded="false">
                <i class="fa-solid fa-receipt icon"></i><span class="nav-text">Member_Report</span>
                </a>

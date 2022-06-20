@@ -47,6 +47,45 @@ if(isset($_GET['loadData']))
          echo json_encode($dataset);
     } 
 
+// ********* load Schedual table ***********
+if(isset($_GET['loadSchedual']))
+{
+  $sql = "SELECT * FROM `members` ORDER BY `members`.`id` DESC";
+  $query = mysqli_query($link, $sql);   
+    $count = 1;
+    while($row = mysqli_fetch_array($query)){
+
+ // edit Button
+ $updateButton = '<a href="#" class="edit-btn text-info" data-eid="'.$row['id'].'"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
+            
+ // Delete Button
+ $deleteButton = '<a href="#" class="dlt-btn text-danger" data-did="'.$row['id'].'"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+             
+ // View Button
+ $viewButton = '<a href="#" class="view-btn text-success" data-vid="'.$row['id'].'"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+
+ $action = $viewButton." ".$updateButton."  ".$deleteButton;
+
+        $array[] = array(
+          "id" => $row['id'],
+          "image" => '<img src="db_images/members/'.$row['image'].'" style="width: 80px; height: 80px; border-radius: 50%;">',
+          "name" => $row['name'],
+          "gender" => ucfirst($row['gender']),
+          "address" => $row['address'],
+          "contact" => $row['contact'],
+          "action" => $action
+        );
+        $count++;
+       }    
+        $dataset = array(
+          "echo" => 1,
+          "totalrecords" => count($array),
+          "totaldisplayrecords" => count($array),
+          "data" => $array
+      );
+         echo json_encode($dataset);
+    }
+
 // ****** Update Record *********
 if(isset($_GET['editId'])){
   $id = $_GET['editId'];
@@ -93,7 +132,7 @@ if(isset($_POST['search'])){
       echo $output;     
   }
 }
-// ****** View Details *********
+// ****** View Details in modal *********
 if(isset($_GET['viewId'])){
   $id = $_GET['viewId'];
   $sql = "SELECT * from `members` where `id` = '$id'";
@@ -118,7 +157,7 @@ if(isset($_GET['viewId'])){
            <large><b>Membership Plan Details</b></large>
             <table class="table table-responsive table-responsive-lg" style="width:100%;">
               <thead>
-                <tr>
+                <tr class="table-bordered">
                   <th>ID</th>
                   <th>Name</th>
                   <th>Age</th>
@@ -130,7 +169,7 @@ if(isset($_GET['viewId'])){
                 </tr>
               </thead>
               <tbody>
-                 <tr>
+                 <tr class="table-bordered border-dark">
                    <td>'.$row["id"].'</td>
                    <td>'.$row["name"].'</td>
                    <td>'.$row["age"].'</td>
