@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2022 at 02:20 PM
+-- Generation Time: Jun 21, 2022 at 02:26 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -77,7 +77,6 @@ INSERT INTO `members` (`id`, `name`, `contact`, `address`, `age`, `email`, `gend
 (34, 'Shehzad', '03075709661', 'Landikotal', 23, 'shehzadshinwari100@gmail.com', 'male', 'evening', 't4.jpg', 0, 0, 0, NULL),
 (35, 'jawad khan', '03060301226', 'Saddar Bazar', 22, 'jawad@gmal.com', 'male', 'morning', 'admin2.jpg', 0, 0, 0, NULL),
 (36, 'Shams ur Rehman', '03029671213', 'Gulberg', 25, 'shams@gmail.com', 'male', 'evening', 'waheed.jpg', 0, 0, 0, NULL),
-(39, 'ibrar', '', '', 0, '', '', '', '', 0, 0, 0, NULL),
 (51, 'Khuzifa khalil', '03325661785', 'Islamabad pakistan', 32, 'khuzaifa@khalil.com', 'male', 'evening', 'neil-soni-6wdRuK7bVTE-unsplash.jpg', 0, 0, 0, NULL),
 (52, 'Khan', '03026598741', 'KHAN BAZAR LANDIKOTAL', 87, 'khan@gmail.com', 'female', 'morning', 't-2.png', 0, 0, 0, NULL),
 (54, 'Asad khan', '03070725745', 'Sitara market  Peshawar', 21, 'asad@gmai.com', 'male', 'morning', 't4.jpg', 0, 0, 0, NULL),
@@ -103,7 +102,7 @@ INSERT INTO `members` (`id`, `name`, `contact`, `address`, `age`, `email`, `gend
 (89, 'SD', 'DSASDAS', '23WDASDAD', 23, 'ADIML@GMAIL.COM', 'male', 'morning', '', 0, 0, 0, NULL),
 (92, 'Rizwan', '03026598147', 'landiktoal bazar', 34, 'rizwan@gmail.com', 'male', 'evening', 'waheed.jpg', 0, 0, 0, NULL),
 (94, 'Ali hamza', 'dfs', 'fgdfg', 45, 'dfs@dsf.omm', 'female', 'morning', '', 0, 0, 0, NULL),
-(95, 'Hashim khan', '03075896321', 'Hashim quarter saddar market Peshawar', 65, 'hashim@gmail.com', 'male', 'morning', '', 0, 0, 0, '2022-06-15'),
+(95, 'Hashim khan', '03075896321', 'Hashim quarter saddar market Peshawar', 65, 'hashim@gmail.com', 'male', 'morning', '', 1, 11, 3, '2022-06-15'),
 (96, 'Hina banu', '03049865321', 'Lahore Pakistan', 25, 'banu@gmail.com', 'male', 'evening', '', 0, 0, 0, '2022-06-18'),
 (98, 'Shehzad khan', '03241096106', 'Shinwari station khel landikotal', 23, 'shehzad@gmail.com', 'male', 'evening', 'FB.jpg', 3, 12, 2, '2022-06-18');
 
@@ -152,6 +151,31 @@ INSERT INTO `plans` (`id`, `plan`, `amount`) VALUES
 (3, 6, 4000),
 (4, 9, 6000),
 (5, 12, 8000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `schedul`
+--
+
+CREATE TABLE `schedul` (
+  `id` int(100) NOT NULL,
+  `member_id` int(100) DEFAULT NULL,
+  `start_date` varchar(200) DEFAULT NULL,
+  `end_date` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `schedul`
+--
+
+INSERT INTO `schedul` (`id`, `member_id`, `start_date`, `end_date`) VALUES
+(7, 35, '2022-06-01', '2022-06-21'),
+(8, 36, '2022-05-01', '2022-06-21'),
+(9, 34, '2022-04-01', '2022-05-31'),
+(10, 98, '2022-06-01', '2022-06-30'),
+(11, 96, '2022-05-01', '2022-05-31'),
+(12, 95, '2022-04-01', '2022-04-30');
 
 -- --------------------------------------------------------
 
@@ -205,6 +229,13 @@ ALTER TABLE `plans`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `schedul`
+--
+ALTER TABLE `schedul`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `member_id` (`member_id`);
+
+--
 -- Indexes for table `trainers`
 --
 ALTER TABLE `trainers`
@@ -239,10 +270,26 @@ ALTER TABLE `plans`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `schedul`
+--
+ALTER TABLE `schedul`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `trainers`
 --
 ALTER TABLE `trainers`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `schedul`
+--
+ALTER TABLE `schedul`
+  ADD CONSTRAINT `schedul_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

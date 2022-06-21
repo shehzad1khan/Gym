@@ -50,11 +50,11 @@ if(isset($_GET['loadData']))
 // ********* load Schedual table ***********
 if(isset($_GET['loadSchedual']))
 {
-  $sql = "SELECT * FROM `members` ORDER BY `members`.`id` DESC";
-  $query = mysqli_query($link, $sql);   
+  $sql = "SELECT m.id,s.member_id, m.image, m.gender, m.name,s.start_date,s.end_date FROM `members` as m LEFT JOIN `schedul` as s ON m.id = s.member_id";
+  $query = mysqli_query($link, $sql);
+
     $count = 1;
     while($row = mysqli_fetch_array($query)){
-
  // edit Button
  $updateButton = '<a href="#" class="edit-btn text-info" data-eid="'.$row['id'].'"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
             
@@ -66,13 +66,19 @@ if(isset($_GET['loadSchedual']))
 
  $action = $viewButton." ".$updateButton."  ".$deleteButton;
 
+ $var = $row['start_date'];
+ $new1 = date("d/m/Y", strtotime($var) );
+
+ $var1 = $row['end_date'];
+ $new2 = date("d-m-Y", strtotime($var1) );
+
         $array[] = array(
           "id" => $row['id'],
           "image" => '<img src="db_images/members/'.$row['image'].'" style="width: 80px; height: 80px; border-radius: 50%;">',
           "name" => $row['name'],
           "gender" => ucfirst($row['gender']),
-          "address" => $row['address'],
-          "contact" => $row['contact'],
+          "st_date" => $new1,
+          "en_date" => $new2,
           "action" => $action
         );
         $count++;

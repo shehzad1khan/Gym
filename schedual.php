@@ -5,7 +5,7 @@
      $member_id = $_POST['member_id'];
      $start_date = $_POST['stdate'];
      $end_date = $_POST['endate'];
-
+  
 
     if($_POST['action'] == 'insert'){
         $sql = "INSERT into schedul(member_id, start_date, end_date) VALUES('$member_id','$start_date','$end_date')";
@@ -162,8 +162,8 @@
                 <th>Image</th>
                 <th>Name</th>
                 <th>Gender</th>
-                <th>Address</th>
-                <th>Contact</th>
+                <th>Start_Date</th>
+                <th>End_Date</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -174,8 +174,8 @@
                 <th>Image</th>
                 <th>Name</th>
                 <th>Gender</th>
-                <th>Address</th>
-                <th>Contact</th>
+                <th>Start_Date</th>
+                <th>End_Date</th>
                 <th>Action</th>
             </tr>
         </tfoot>
@@ -207,7 +207,7 @@
                             $sql = "SELECT * FROM members";
                             $result = mysqli_query($link, $sql);
                             while($row = mysqli_fetch_assoc($result)){
-                              echo'<option value="'.$row['id'].'" id="package">ID: '.$row['id'].' &nbsp;&nbsp;'.$row['name'].'</option>';
+                              echo'<option value="'.$row['id'].'" id="package" class="font-weight-bold text-info text-capitalize">&nbsp;'.$row['name'].'&nbsp;/&nbsp;'.$row['id'].'</option>';
                             }?>
                           </select>
                       </div>
@@ -277,8 +277,8 @@ $(document).ready(function() {
             {data: 'image'},
             {data: 'name'},
             {data: 'gender'},
-            {data: 'address'},
-            {data: 'contact'},
+            {data: 'st_date'},
+            {data: 'en_date'},
             {data: 'action'}
         ]
      });
@@ -308,7 +308,8 @@ $(document).ready(function() {
                 var table = $('#example').DataTable(); 
                   table.ajax.reload( null, true );
                   $('#exampleModal').modal('hide');
-                }else{
+                }
+                else{
                     toastr.success('Schedual updated successfully');
                     $('#form')[0].reset();
                 var table = $('#example').DataTable(); 
