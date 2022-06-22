@@ -50,21 +50,21 @@ if(isset($_GET['loadData']))
 // ********* load Schedual table ***********
 if(isset($_GET['loadSchedual']))
 {
-  $sql = "SELECT m.id,s.member_id, m.image, m.gender, m.name,s.start_date,s.end_date FROM `members` as m LEFT JOIN `schedul` as s ON m.id = s.member_id";
+  $sql = "SELECT m.id,s.id, s.member_id, m.image, m.gender, m.name,s.start_date,s.end_date FROM `members` as m LEFT JOIN `schedul` as s ON m.id = s.member_id";
   $query = mysqli_query($link, $sql);
 
     $count = 1;
     while($row = mysqli_fetch_array($query)){
  // edit Button
- $updateButton = '<a href="#" class="edit-btn text-info" data-eid="'.$row['id'].'"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
+ $updateButton = '<a href="#" class="ml-5 edit-btn text-info" data-eid="'.$row['id'].'"><button class="btn btn-outline-info">Edit</button></a>';
             
- // Delete Button
- $deleteButton = '<a href="#" class="dlt-btn text-danger" data-did="'.$row['id'].'"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+//  // Delete Button
+//  $deleteButton = '<a href="#" class="dlt-btn text-danger" data-did="'.$row['id'].'"><button class="btn btn-outline-danger">Delete</button></a>';
              
- // View Button
- $viewButton = '<a href="#" class="view-btn text-success" data-vid="'.$row['id'].'"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+//  // View Button
+//  $viewButton = '<a href="#" class="view-btn text-success" data-vid="'.$row['id'].'"><i class="fa fa-eye" aria-hidden="true"></i></a>';
 
- $action = $viewButton." ".$updateButton."  ".$deleteButton;
+ $action =$updateButton;
 
  $var = $row['start_date'];
  $new1 = date("d/m/Y", strtotime($var) );
@@ -73,10 +73,10 @@ if(isset($_GET['loadSchedual']))
  $new2 = date("d-m-Y", strtotime($var1) );
 
         $array[] = array(
-          "id" => $row['id'],
+          "id" => $count,
+          "member_id" => $row['member_id'],
           "image" => '<img src="db_images/members/'.$row['image'].'" style="width: 80px; height: 80px; border-radius: 50%;">',
           "name" => $row['name'],
-          "gender" => ucfirst($row['gender']),
           "st_date" => $new1,
           "en_date" => $new2,
           "action" => $action
@@ -92,7 +92,7 @@ if(isset($_GET['loadSchedual']))
          echo json_encode($dataset);
     }
 
-// ****** Update Record *********
+// ****** Update member List Record *********
 if(isset($_GET['editId'])){
   $id = $_GET['editId'];
   $sql = "SELECT * from `members` where `id` = '$id'";
@@ -108,6 +108,9 @@ if(isset($_GET['editId'])){
     'gender' => $row['gender'],
     'shift' => $row['shift'],
     'image' => $row['image'],
+    'plan' => $row['plan'],
+    'package' => $row['package'],
+    'trainer' => $row['trainer'],
   );
   echo json_encode($array);
 }
@@ -246,7 +249,7 @@ if(isset($_GET['viewId'])){
           $array[] = array(
             "id" => $count,
             "plan" => $row['plan'].' month/s',
-            "amount" => '<i class="fa fa-usd pr-2"></i>'.number_format($row['amount'],2),
+            "amount" => '<i class="fa-solid fa-rupee-sign mr-2 text-danger fa-beat"></i>'.number_format($row['amount'],2),
             "action" => $action
           );
           $count++;
@@ -279,9 +282,9 @@ if(isset($_GET['viewId'])){
           $array[] = array(
             "id" => $count,
             "information" =>'<i class="fa fa-user pr-2 mb-2 text-info"></i>'.$row['name'].'<br>
-                            <i class="fa fa-phone pr-2 mb-2 text-success"></i>'.$row['contact'].'<br>
+                            <i class="fa-solid fa-phone mr-2 text-bg-success fa-shake mb-2"></i>'.$row['contact'].'<br>
                             <i class="fa fa-envelope pr-2 mb-2 text-warning"></i>'.$row['email'].'<br>
-                            <i class="fa fa-usd pr-2 mb-2 text-danger"></i>'.$row['rate'],
+                            <i class="fa-solid fa-rupee-sign mr-2 text-danger fa-beat mb-2"></i>'.$row['rate'],
             "action" => $action 
           );
           $count++;
@@ -338,6 +341,21 @@ if(isset($_GET['editTrainee'])){
     'contact' => $row['contact'],
     'email' => $row['email'],
     'rate' => $row['rate'],
+  );
+  echo json_encode($array);
+}
+
+// ****** Update Schedual *********
+if(isset($_GET['editSchedual'])){
+  $id = $_GET['editSchedual'];
+  $sql = "SELECT * from `schedul` where `id` = '$id'";
+  $query = mysqli_query($link, $sql);
+  $row = mysqli_fetch_array($query);  
+   
+  $array = array(
+    'member_id' => $row['id'],
+    'stdate' => $row['start_date'],
+    'endate' => $row['end_date'],
   );
   echo json_encode($array);
 }

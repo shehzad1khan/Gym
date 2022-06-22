@@ -15,14 +15,14 @@
         }    
     }
 
-//     if($_POST['action'] == 'update'){
-//         $id = $_POST['id'];
-//         $sql = "UPDATE plans set plan = '$packname', amount = '$packamount' where id = '$id'";
-//         $query = mysqli_query($link, $sql);;
-//         if($query){
-//            echo 2;
-//         } 
-//     }
+    if($_POST['action'] == 'update'){
+        $id = $_POST['id'];
+        $sql = "UPDATE schedul set start_date = '$start_date', end_date = '$end_date' where id = '$id'";
+        $query = mysqli_query($link, $sql);;
+        if($query){
+           echo 2;
+        } 
+    }
       
 
   }
@@ -143,6 +143,7 @@
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
                 <button class="btn btn-success add">Add Schedual</button>
+                <span class="offset-5 list-span">Scheduale</span>    
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="home.php">Dashboard</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0)">Schedual</a></li>
@@ -154,17 +155,16 @@
 
           <!-- *********** table row start ********** -->
             <div class="row">
-                <div class="col-lg-12 col-sm-12">
+                <div class="offset-1 col-lg-10 col-sm-10">
                 <table id="example" class="table border-radius-2 table-hover table-responsive-lg table-striped table-bordered" style="width:100%;">
         <thead>
             <tr>
-                <th>ID</th>
+                <th style="width: 2%;">ID</th>
                 <th>Image</th>
                 <th>Name</th>
-                <th>Gender</th>
                 <th>Start_Date</th>
                 <th>End_Date</th>
-                <th>Action</th>
+                <th style="width: 15%; text-align: center;">Action</th>
             </tr>
         </thead>
         
@@ -173,7 +173,6 @@
                 <th>ID</th>
                 <th>Image</th>
                 <th>Name</th>
-                <th>Gender</th>
                 <th>Start_Date</th>
                 <th>End_Date</th>
                 <th>Action</th>
@@ -199,15 +198,15 @@
                   <input type="hidden" name="id" value="0" id="id">
                     <input type="hidden" name="action" value="insert" id="action">
                     <div class="form-row">
-                      <div class="col">
-                        <label class="col-form-label">Packages:</label>
-                          <select class="form-select form-select-lg custom-select" name="member_id">
+                      <div class="col select-col">
+                        <label class="col-form-label">Members:</label>
+                          <select class="form-select form-select-lg custom-select" name="member_id" id="memId">
                             <option disabled selected>Select Member</option>
                           <?php 
                             $sql = "SELECT * FROM members";
                             $result = mysqli_query($link, $sql);
                             while($row = mysqli_fetch_assoc($result)){
-                              echo'<option value="'.$row['id'].'" id="package" class="font-weight-bold text-info text-capitalize">&nbsp;'.$row['name'].'&nbsp;/&nbsp;'.$row['id'].'</option>';
+                              echo'<option value="'.$row['id'].'" id="member" class="font-weight-bold text-info text-capitalize">&nbsp;'.$row['name'].'&nbsp;/&nbsp;'.$row['id'].'</option>';
                             }?>
                           </select>
                       </div>
@@ -276,7 +275,6 @@ $(document).ready(function() {
             {data: 'id'},
             {data: 'image'},
             {data: 'name'},
-            {data: 'gender'},
             {data: 'st_date'},
             {data: 'en_date'},
             {data: 'action'}
@@ -290,7 +288,7 @@ $(document).ready(function() {
          $('#id').val('0');
          $('#exampleModalLabel').html("Add Schedule");
          $('#submit').val("Submit");
-             
+         $(".select-col").show();
         });
 
  // ****** insert schedual ***********
@@ -318,6 +316,33 @@ $(document).ready(function() {
                 }                           
             }
         });             
+    });
+
+  // ****** edit schedual ***********
+    $(document).on('click', '.edit-btn', function() {
+        var id = $(this).data('eid');
+        $.ajax({
+            url : "fetch.php?editSchedual="+id,
+            type: "POST",
+            dataType: "json",
+            success: function(data) {
+               console.log(data);
+              // var member = data.member_id;
+              // // $("#memId selected").val(data.member_id);
+              //  $('#memId option[value=member]').attr('selected', true);
+              //   // $("#member").val(data.member_id);
+
+                $("#stdate").val(data.stdate);
+                $("#endate").val(data.endate);
+                $("#id").val(data.member_id);
+                $('#action').val('update');
+                $('#submit').val('UPDATE');
+                $('#exampleModalLabel').html("Edit Schedule");
+                $(".select-col").hide();
+                $('#exampleModal').modal('show');
+                
+            }
+        });
     });
 
 });

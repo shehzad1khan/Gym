@@ -449,6 +449,10 @@ $(document).ready(function() {
                  }                           
                  $('#exampleModal').modal('show');
 
+                 if(data.plan){
+                  $("#plan").trigger("click");
+                 }
+
             }
          });
       });
