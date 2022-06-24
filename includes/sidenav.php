@@ -28,15 +28,15 @@
                </a>
             </li>
             <li>
-               <a href="packages.php" aria-expanded="false">
-               <i class="fa-solid fa-cubes icon"></i><span class="nav-text">Packages</span>
-               </a>
-            </li>
-            <li>
                <a href="plans.php" aria-expanded="false">
                <i class="fa-solid fa-chart-pie icon"></i><span class="nav-text">Plans</span>
                </a>
             </li>
+            <li>
+               <a href="packages.php" aria-expanded="false">
+               <i class="fa-solid fa-cubes icon"></i><span class="nav-text">Packages</span>
+               </a>
+            </li>            
             <li>
                <a href="trainers.php" aria-expanded="false">
                <i class="fa-solid fa-person-chalkboard icon"></i><span class="nav-text">Trainers</span>

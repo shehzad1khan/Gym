@@ -142,8 +142,8 @@
 
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
-                <button class="btn btn-success add">Add Schedual</button>
-                <span class="offset-5 list-span">Scheduale</span>    
+                <button class="btn btn-success offset-1 add">Add Schedual</button>
+                <span class="offset-4 list-span">Scheduale</span>    
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="home.php">Dashboard</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0)">Schedual</a></li>

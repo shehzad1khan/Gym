@@ -227,34 +227,34 @@
                             $sql = "SELECT * FROM plans";
                             $result = mysqli_query($link, $sql);
                           ?>
-                          <select class="form-select form-select-lg custom-select" name="plan">
+                          <select class="form-select form-select-lg custom-select" id="plan" name="plan">
                             <option disabled selected>Select Plan</option>
                             <?php while($row = mysqli_fetch_array($result)){ 
-                             echo '<option value="'.$row['id'].'" id="plan">'.$row['plan'].' Months</option>';
+                             echo '<option value="'.$row['id'].'">'.$row['plan'].' Months</option>';
                              } ?>
                           </select>
                       </div>
                       <div class="col">
                         <label class="col-form-label">Packages:</label>
-                          <select class="form-select form-select-lg custom-select" name="package">
+                          <select class="form-select form-select-lg custom-select" id="package" name="package">
                             <option disabled selected>Select Package</option>
                           <?php 
                             $sql = "SELECT * FROM packages";
                             $result = mysqli_query($link, $sql);
                             while($row = mysqli_fetch_assoc($result)){
-                              echo'<option value="'.$row['id'].'" id="package">'.$row['package'].' &nbsp;&nbsp;&nbsp;&nbsp;RS = '.$row['amount'].'</option>';
+                              echo'<option value="'.$row['id'].'">'.$row['package'].' &nbsp;&nbsp;&nbsp;&nbsp;RS = '.$row['amount'].'</option>';
                             }?>
                           </select>
                       </div>  
                       <div class="col">
                         <label class="col-form-label">Trainers:</label>
-                          <select class="form-select form-select-lg custom-select" name="trainer">
+                          <select class="form-select form-select-lg custom-select" id="trainer" name="trainer">
                             <option disabled selected>Select Trainer</option>
                             <?php 
                             $sql = "SELECT * FROM trainers";
                             $result = mysqli_query($link, $sql);
                             while($row = mysqli_fetch_assoc($result)){
-                              echo '<option value="'.$row['id'].'" id="trainer">'.$row['name'].' &nbsp;&nbsp;&nbsp;&nbsp;<b>Fee</b> = '.$row['rate'].'</option>';
+                              echo '<option value="'.$row['id'].'">'.$row['trainer'].' &nbsp;&nbsp;&nbsp;&nbsp;<b>Fee</b> = '.$row['rate'].'</option>';
                             }?>
                           </select>
                       </div>                    
@@ -351,7 +351,11 @@
     <script>
 $(document).ready(function() {           
         $('#example').DataTable({
-          order: [[0, 'desc']],
+          lengthMenu: [
+            [25, 10, 50, -1],
+            [25, 10, 50, 'All'],
+           ],
+        order: [[0, 'desc']],
         "processing": true,
         ajax: {
         url: "fetch.php?loadData",
@@ -372,13 +376,12 @@ $(document).ready(function() {
 
        $('.add').on('click', function() {
         $('#form')[0].reset();
-        $('#exampleModal').modal('show');
         $('#action').val('insert');
         $('#id').val('0');
         $('#exampleModalLabel').html("Add Record");
         $('#submit').val("Submit");
         $('#previewImg').attr("src", "db_images/members/placeholder-img.png");
-             
+        $('#exampleModal').modal('show');     
         });
        
     // ******* insert data *********    
@@ -395,10 +398,10 @@ $(document).ready(function() {
                 success: function(data) {
                   toastr.success(data);
                   var table = $('#example').DataTable(); 
-                  table.ajax.reload( null, false );
+                  table.ajax.reload( null, false );                  
                   $('#form')[0].reset();
                   $('#exampleModal').modal('hide');   
-                                                   
+                  $(something).closest("tr").fadeIn(1000);                                 
                 }        
             });
         });
@@ -449,11 +452,10 @@ $(document).ready(function() {
                  }                           
                  $('#exampleModal').modal('show');
 
-                 if(data.plan){
-                  $("#plan").trigger("click");
-                 }
-
-            }
+                $("#plan").val(data.plan).trigger("change");            
+                $("#package").val(data.package).trigger("change");            
+                $("#trainer").val(data.trainer).trigger("change");
+             }
          });
       });
 

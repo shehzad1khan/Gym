@@ -22,7 +22,7 @@ if(isset($_GET['loadData']))
  // View Button
  $viewButton = '<a href="#" class="view-btn text-success" data-vid="'.$row['id'].'"><i class="fa fa-eye" aria-hidden="true"></i></a>';
 
- $action = $viewButton." ".$updateButton."  ".$deleteButton;
+ $action = $viewButton." &#160;&#160;".$updateButton." &#160;&#160;".$deleteButton;
 
         $array[] = array(
           "id" => $row['id'],
@@ -144,56 +144,58 @@ if(isset($_POST['search'])){
 // ****** View Details in modal *********
 if(isset($_GET['viewId'])){
   $id = $_GET['viewId'];
-  $sql = "SELECT * from `members` where `id` = '$id'";
+  $sql = "SELECT m.*, pl.plan, pa.package, tr.trainer, sc.start_date, sc.end_date FROM members as m join plans as pl on pl.id = m.plan join packages as pa on pa.id = m.package join trainers as tr on tr.id = m.trainer join schedul as sc on sc.id = m.schedual WHERE m.id = '$id'";
   $query = mysqli_query($link, $sql);
   $row = mysqli_fetch_array($query);  
- 
+  $count = mysqli_num_rows($query);
+   if($count > 0){
   $html = '
         <div class="row">
           <div class="float-left col-md-4">            
-              <b class="d-inline">Name :</b> <p class="d-inline p-name">'.$row["name"].'</p> <br>
-              <b class="d-inline">Age :</b> <p class="d-inline  p-age">'.$row["age"].'</p> <br>
-              <b class="d-inline">Address :</b> <p class="d-inline p-address">'.$row["address"].'</p> <br>
-              <b class="d-inline">Contact :</b> <p class="d-inline p-contact">'.$row["contact"].'</p> <br>
-              <b class="d-inline">Email :</b> <p class="d-inline p-email">'.$row["email"].'</p> <br>
-              <b class="d-inline">Gender :</b> <p class="d-inline p-gender">'.$row["gender"].'</p> <br>
-              <b class="d-inline">Shift :</b> <p class="d-inline p-shift">'.$row["shift"].'</p> <br>            
-              <b class="d-inline">Joining Date :</b> <p class="d-inline p-date">'.$row["date"].'</p> <br>            
+              <b class="d-inline">Name :</b> <p class="d-inline" style="">'.$row["name"].'</p> <br>
+              <b class="d-inline">Age :</b> <p class="d-inline">'.$row["age"].'</p> <br>
+              <b class="d-inline">Address :</b> <p class="d-inline">'.$row["address"].'</p> <br>
+              <b class="d-inline">Contact :</b> <p class="d-inline">'.$row["contact"].'</p> <br>
+              <b class="d-inline">Email :</b> <p class="d-inline">'.$row["email"].'</p> <br>
+              <b class="d-inline">Gender :</b> <p class="d-inline">'.$row["gender"].'</p> <br>
+              <b class="d-inline">Shift :</b> <p class="d-inline">'.$row["shift"].'</p> <br>            
+              <b class="d-inline">Joining Date :</b> <p class="d-inline">'.$row["date"].'</p> <br>            
           </div>  
        ';
   $html .= '
            <div class="float-right col-md-8 col-sm-8">
-           <large><b>Membership Plan Details</b></large>
-            <table class="table table-responsive table-responsive-lg" style="width:100%;">
+           <b style="font-size:20px;">Membership Plan Details</b>
+            <table class="table table-bordered table-responsive-lg" style="width:100%;">
               <thead>
                 <tr class="table-bordered">
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Address</th>
-                  <th>Contact</th>
-                  <th>Email</th>
-                  <th>Gender</th>
-                  <th>Shift</th>
+                  <th>M.ID</th>
+                  <th>Plan</th>
+                  <th>Package</th>
+                  <th>Trainer</th>
+                  <th>Start_Date</th>
+                  <th>End_Date</th>
+                  <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
-                 <tr class="table-bordered border-dark">
-                   <td>'.$row["id"].'</td>
-                   <td>'.$row["name"].'</td>
-                   <td>'.$row["age"].'</td>
-                   <td>'.$row["address"].'</td>
-                   <td>'.$row["contact"].'</td>
-                   <td>'.$row["email"].'</td>
-                   <td>'.$row["gender"].'</td>
-                   <td>'.$row["shift"].'</td>
-                 </tr>
-              </tbody>
+            <tbody>
+              <tr>
+                <td style="font-size: 18px; color: black;">'.$row["id"].'</td>
+                <td style="font-size:18px; color: black;">'.$row["plan"].' months</td>
+                <td style="font-size:18px; color: black;">'.$row["package"].'</td>
+                <td style="font-size:18px; color: black;">'.$row["trainer"].'</td>
+                <td style="font-size:18px; color: black;">'.date("d M Y",strtotime($row['start_date'])).'</td>
+                <td style="font-size:18px; color: black;">'.date("d M Y",strtotime($row['end_date'])).'</td>
+                <td><span class="badge badge-danger">Expire</span></td>
+              </tr>
+            </tbody>
             </table>
            </div>
         </div>
-  ';     
-       echo $html; 
+          ';     
+           echo $html;
+   }else{
+    echo "<h3 class='offset-4 text-danger fadeOut'>Membership Duration Is Not Mention </h3>";
+   }    
   }
 
   /// package table code start /// 
@@ -281,8 +283,8 @@ if(isset($_GET['viewId'])){
   
           $array[] = array(
             "id" => $count,
-            "information" =>'<i class="fa fa-user pr-2 mb-2 text-info"></i>'.$row['name'].'<br>
-                            <i class="fa-solid fa-phone mr-2 text-bg-success fa-shake mb-2"></i>'.$row['contact'].'<br>
+            "information" =>'<i class="fa fa-user pr-2 mb-2 text-info"></i>'.$row['trainer'].'<br>
+                            <i class="fa-solid fa-phone mr-2 text-bg-success fa-shake mb-2" style="--fa-animation-duration: 10s;"></i>'.$row['contact'].'<br>
                             <i class="fa fa-envelope pr-2 mb-2 text-warning"></i>'.$row['email'].'<br>
                             <i class="fa-solid fa-rupee-sign mr-2 text-danger fa-beat mb-2"></i>'.$row['rate'],
             "action" => $action 
@@ -337,7 +339,7 @@ if(isset($_GET['editTrainee'])){
    
   $array = array(
     'id' => $row['id'],
-    'name' => $row['name'],
+    'trainer' => $row['trainer'],
     'contact' => $row['contact'],
     'email' => $row['email'],
     'rate' => $row['rate'],

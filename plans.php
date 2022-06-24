@@ -16,7 +16,7 @@
     if($_POST['action'] == 'update'){
         $id = $_POST['id'];
         $sql = "UPDATE plans set plan = '$packname', amount = '$packamount' where id = '$id'";
-        $query = mysqli_query($link, $sql);;
+        $query = mysqli_query($link, $sql);
         if($query){
            echo 2;
         } 
@@ -229,7 +229,7 @@
 <script>
 $(document).ready(function() {
      $('#example').DataTable({
-        order: [[0, 'asc']],
+        order: [[0, 'desc']],
         "processing": false,
         ajax: {
         url: "fetch.php?loadPlans",
@@ -270,7 +270,7 @@ $(document).ready(function() {
         $.ajax({
             url : "fetch.php?editPlan="+id,
             type: "GET",
-            dataType: "json",
+            dataType: "json", 
             success: function(data) {
                 console.log(data);
                 $('#submit').val('UPDATE');
