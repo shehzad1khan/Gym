@@ -4,8 +4,7 @@
   if(isset($_POST['action'])){
      $member_id = $_POST['member_id'];
      $start_date = $_POST['stdate'];
-     $end_date = $_POST['endate'];
-  
+     $end_date = $_POST['endate'];  
 
     if($_POST['action'] == 'insert'){
         $sql = "INSERT into schedul(member_id, start_date, end_date) VALUES('$member_id','$start_date','$end_date')";
@@ -104,17 +103,7 @@
         <!--**********************************
             Nav header start
         ***********************************-->
-        <div class="nav-header">
-            <div class="brand-logo">
-                <a href="index.html">
-                    <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
-                    <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
-                    <span class="brand-title">
-                        <img src="images/logo-text.png" alt="">
-                    </span>
-                </a>
-            </div>
-        </div>
+        <?php include('includes/navheader.php');?>
         <!--**********************************
             Nav header end
         ***********************************-->

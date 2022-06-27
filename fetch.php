@@ -144,8 +144,9 @@ if(isset($_POST['search'])){
 // ****** View Details in modal *********
 if(isset($_GET['viewId'])){
   $id = $_GET['viewId'];
+
   $sql = "SELECT m.*, pl.plan, pa.package, tr.trainer, sc.start_date, sc.end_date FROM members as m join plans as pl on pl.id = m.plan join packages as pa on pa.id = m.package join trainers as tr on tr.id = m.trainer join schedul as sc on sc.id = m.schedual WHERE m.id = '$id'";
-  $query = mysqli_query($link, $sql);
+  $query =mysqli_query($link, $sql);
   $row = mysqli_fetch_array($query);  
   $count = mysqli_num_rows($query);
    if($count > 0){
