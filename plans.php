@@ -219,7 +219,7 @@
 <script>
 $(document).ready(function() {
      $('#example').DataTable({
-        order: [[0, 'desc']],
+        order: [[0, 'asc']],
         "processing": false,
         ajax: {
         url: "fetch.php?loadPlans",
