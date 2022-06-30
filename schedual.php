@@ -201,11 +201,11 @@
                       </div>
                       <div class="col">
                         <label for="stdate" class="col-form-label">Start_Date:</label>
-                        <input type="date" class="form-control" id="stdate" name="stdate">
+                        <input type="date" class="form-control" id="stdate" name="stdate" required>
                       </div>
                       <div class="col">
                         <label for="endate" class="col-form-label">End_Date:</label>
-                        <input type="date" class="form-control" id="endate" name="endate" >
+                        <input type="date" class="form-control" id="endate" name="endate" required>
                       </div>
                     </div>
                     <div class="form-group mr-auto mt-2">

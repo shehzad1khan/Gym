@@ -67,10 +67,10 @@ if(isset($_GET['loadSchedual']))
  $action =$updateButton;
 
  $var = $row['start_date'];
- $new1 = date("d/m/Y", strtotime($var) );
+ $new1 = date("d-M-Y", strtotime($var) );
 
  $var1 = $row['end_date'];
- $new2 = date("d-m-Y", strtotime($var1) );
+ $new2 = date("d-M-Y", strtotime($var1) );
 
         $array[] = array(
           "id" => $count,
@@ -145,7 +145,7 @@ if(isset($_POST['search'])){
 if(isset($_GET['viewId'])){
   $id = $_GET['viewId'];
 
-  $sql = "SELECT m.*, pl.plan, pa.package, tr.trainer, sc.start_date, sc.end_date FROM members as m join plans as pl on pl.id = m.plan join packages as pa on pa.id = m.package join trainers as tr on tr.id = m.trainer join schedul as sc on sc.id = m.schedual WHERE m.id = '$id'";
+  $sql = "SELECT m.*, pl.plan, pa.package, tr.trainer, sc.start_date, sc.end_date FROM members as m join plans as pl on pl.id = m.plan join packages as pa on pa.id = m.package join trainers as tr on tr.id = m.trainer join schedul as sc on sc.member_id = m.id WHERE m.id = '$id'";
   $query =mysqli_query($link, $sql);
   $row = mysqli_fetch_array($query);  
   $count = mysqli_num_rows($query);
@@ -175,7 +175,7 @@ if(isset($_GET['viewId'])){
                   <th>Trainer</th>
                   <th>Start_Date</th>
                   <th>End_Date</th>
-                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
             <tbody>
@@ -186,7 +186,7 @@ if(isset($_GET['viewId'])){
                 <td style="font-size:18px; color: black;">'.$row["trainer"].'</td>
                 <td style="font-size:18px; color: black;">'.date("d M Y",strtotime($row['start_date'])).'</td>
                 <td style="font-size:18px; color: black;">'.date("d M Y",strtotime($row['end_date'])).'</td>
-                <td><span class="badge badge-danger">Expire</span></td>
+                <td><a href="pdf.php?pid='.$row['id'].'" class="btn btn-warning btn-sm offset-2" id="printBtn">Print</a></td>
               </tr>
             </tbody>
             </table>

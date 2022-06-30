@@ -168,34 +168,34 @@
                     <div class="form-row">
                       <div class="col">
                         <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name">
+                        <input type="text" class="form-control" id="name" name="name" required>
                       </div>
                       <div class="col">
                         <label for="age" class="col-form-label">Age:</label>
-                        <input type="number" class="form-control" id="age" name="age">
+                        <input type="number" class="form-control" id="age" name="age" required>
                       </div>
                     </div>
                     <div class="form-row">
                       <div class="col">
                         <label for="address" class="col-form-label">Address:</label>
-                        <input type="text" class="form-control" id="address" name="address" >
+                        <input type="text" class="form-control" id="address" name="address" required>
                       </div>
                     </div>
                     <div class="form-row">
                       <div class="col">
                         <label for="contact" class="col-form-label">Contact:</label>
-                        <input type="text" id="contact" class="input form-control" name="contact">
+                        <input type="text" id="contact" class="input form-control" name="contact" required>
                       </div>
                       <div class="col">
                         <label for="email" class="col-form-label">Email:</label>
-                        <input type="email" id="email" class="input form-control" name="email">
+                        <input type="email" id="email" class="input form-control" name="email" required>
                       </div>                      
                     </div>
                     
                     <div class="form-row">
                       <div class="col">
                         <label class="col-form-label">Gender:</label>
-                          <select class="form-select form-select-lg custom-select" name="gender">
+                          <select class="form-select form-select-lg custom-select" name="gender" id="gender">
                             <option disabled selected>Select Gender</option>
                             <option class="" value="male" id="male">MALE</option>
                             <option class="" value="female" id="female">FEMALE</option>
@@ -203,7 +203,7 @@
                       </div>
                       <div class="col">
                         <label class="col-form-label">Shift:</label>
-                          <select class="form-select form-select-lg custom-select" name="shift">
+                          <select class="form-select form-select-lg custom-select" name="shift" required>
                             <option disabled selected>Select Shift</option>
                             <option class="" value="morning" id="morning">Morning</option>
                             <option class="" value="evening" id="evening">Evening</option>
@@ -217,7 +217,7 @@
                             $sql = "SELECT * FROM plans";
                             $result = mysqli_query($link, $sql);
                           ?>
-                          <select class="form-select form-select-lg custom-select" id="plan" name="plan">
+                          <select class="form-select form-select-lg custom-select" id="plan" name="plan" required>
                             <option disabled selected>Select Plan</option>
                             <?php while($row = mysqli_fetch_array($result)){ 
                              echo '<option value="'.$row['id'].'">'.$row['plan'].' Months</option>';
@@ -226,7 +226,7 @@
                       </div>
                       <div class="col">
                         <label class="col-form-label">Packages:</label>
-                          <select class="form-select form-select-lg custom-select" id="package" name="package">
+                          <select class="form-select form-select-lg custom-select" id="package" name="package" required>
                             <option disabled selected>Select Package</option>
                           <?php 
                             $sql = "SELECT * FROM packages";
@@ -238,7 +238,7 @@
                       </div>  
                       <div class="col">
                         <label class="col-form-label">Trainers:</label>
-                          <select class="form-select form-select-lg custom-select" id="trainer" name="trainer">
+                          <select class="form-select form-select-lg custom-select" id="trainer" name="trainer" required>
                             <option disabled selected>Select Trainer</option>
                             <?php 
                             $sql = "SELECT * FROM trainers";
@@ -376,7 +376,8 @@ $(document).ready(function() {
        
     // ******* insert data *********    
         $('#form').on('submit', function(e){
-            e.preventDefault();    
+            e.preventDefault();
+            $('#gender').attr("required", true);
             var formData = new FormData(this);
             $.ajax({
                 url: "insert.php",
@@ -458,13 +459,23 @@ $(document).ready(function() {
                 type : "GET",
                 data : {viewId:id},
                 success:function(data){ 
-                  console.log(data); 
+                  // console.log(data); 
                    $(".modal-body").html(data);
                    $('#view-modal').modal('show');
                   
                 }
             });
-        });         
+        }); 
+        
+        //  ********** Print Button work start here **********
+        // $(document).on('click', '#printBtn', function(){
+        //   var id = $(this).data('pid');
+        //   console.log(id);
+        //   $.ajax({
+        //     url : "pdf.php?printId="+id,
+        //     type : "GET",
+        //   });
+        // });
 
       //  ********** Delete data from database **********
       $("#example").delegate(".dlt-btn", "click", function(){
