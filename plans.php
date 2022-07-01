@@ -16,7 +16,7 @@
     if($_POST['action'] == 'update'){
         $id = $_POST['id'];
         $sql = "UPDATE plans set plan = '$packname', amount = '$packamount' where id = '$id'";
-        $query = mysqli_query($link, $sql);;
+        $query = mysqli_query($link, $sql);
         if($query){
            echo 2;
         } 
@@ -100,17 +100,7 @@
         <!--**********************************
             Nav header start
         ***********************************-->
-        <div class="nav-header">
-            <div class="brand-logo">
-                <a href="index.html">
-                    <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
-                    <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
-                    <span class="brand-title">
-                        <img src="images/logo-text.png" alt="">
-                    </span>
-                </a>
-            </div>
-        </div>
+        <?php include('includes/navheader.php');?>
         <!--**********************************
             Nav header end
         ***********************************-->
@@ -270,7 +260,7 @@ $(document).ready(function() {
         $.ajax({
             url : "fetch.php?editPlan="+id,
             type: "GET",
-            dataType: "json",
+            dataType: "json", 
             success: function(data) {
                 console.log(data);
                 $('#submit').val('UPDATE');

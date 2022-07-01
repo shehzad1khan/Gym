@@ -4,8 +4,7 @@
   if(isset($_POST['action'])){
      $member_id = $_POST['member_id'];
      $start_date = $_POST['stdate'];
-     $end_date = $_POST['endate'];
-
+     $end_date = $_POST['endate'];  
 
     if($_POST['action'] == 'insert'){
         $sql = "INSERT into schedul(member_id, start_date, end_date) VALUES('$member_id','$start_date','$end_date')";
@@ -15,14 +14,14 @@
         }    
     }
 
-//     if($_POST['action'] == 'update'){
-//         $id = $_POST['id'];
-//         $sql = "UPDATE plans set plan = '$packname', amount = '$packamount' where id = '$id'";
-//         $query = mysqli_query($link, $sql);;
-//         if($query){
-//            echo 2;
-//         } 
-//     }
+    if($_POST['action'] == 'update'){
+        $id = $_POST['id'];
+        $sql = "UPDATE schedul set start_date = '$start_date', end_date = '$end_date' where id = '$id'";
+        $query = mysqli_query($link, $sql);;
+        if($query){
+           echo 2;
+        } 
+    }
       
 
   }
@@ -104,17 +103,7 @@
         <!--**********************************
             Nav header start
         ***********************************-->
-        <div class="nav-header">
-            <div class="brand-logo">
-                <a href="index.html">
-                    <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
-                    <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
-                    <span class="brand-title">
-                        <img src="images/logo-text.png" alt="">
-                    </span>
-                </a>
-            </div>
-        </div>
+        <?php include('includes/navheader.php');?>
         <!--**********************************
             Nav header end
         ***********************************-->
@@ -142,7 +131,8 @@
 
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
-                <button class="btn btn-success add">Add Schedual</button>
+                <button class="btn btn-success offset-1 add">Add Schedual</button>
+                <span class="offset-4 list-span">Scheduale</span>    
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="home.php">Dashboard</a></li>
                         <li class="breadcrumb-item active"><a href="javascript:void(0)">Schedual</a></li>
@@ -154,17 +144,16 @@
 
           <!-- *********** table row start ********** -->
             <div class="row">
-                <div class="col-lg-12 col-sm-12">
+                <div class="offset-1 col-lg-10 col-sm-10">
                 <table id="example" class="table border-radius-2 table-hover table-responsive-lg table-striped table-bordered" style="width:100%;">
         <thead>
             <tr>
-                <th>ID</th>
+                <th style="width: 2%;">ID</th>
                 <th>Image</th>
                 <th>Name</th>
-                <th>Gender</th>
-                <th>Address</th>
-                <th>Contact</th>
-                <th>Action</th>
+                <th>Start_Date</th>
+                <th>End_Date</th>
+                <th style="width: 15%; text-align: center;">Action</th>
             </tr>
         </thead>
         
@@ -173,9 +162,8 @@
                 <th>ID</th>
                 <th>Image</th>
                 <th>Name</th>
-                <th>Gender</th>
-                <th>Address</th>
-                <th>Contact</th>
+                <th>Start_Date</th>
+                <th>End_Date</th>
                 <th>Action</th>
             </tr>
         </tfoot>
@@ -199,25 +187,25 @@
                   <input type="hidden" name="id" value="0" id="id">
                     <input type="hidden" name="action" value="insert" id="action">
                     <div class="form-row">
-                      <div class="col">
-                        <label class="col-form-label">Packages:</label>
-                          <select class="form-select form-select-lg custom-select" name="member_id">
+                      <div class="col select-col">
+                        <label class="col-form-label">Members:</label>
+                          <select class="form-select form-select-lg custom-select" name="member_id" id="memId">
                             <option disabled selected>Select Member</option>
                           <?php 
                             $sql = "SELECT * FROM members";
                             $result = mysqli_query($link, $sql);
                             while($row = mysqli_fetch_assoc($result)){
-                              echo'<option value="'.$row['id'].'" id="package">ID: '.$row['id'].' &nbsp;&nbsp;'.$row['name'].'</option>';
+                              echo'<option value="'.$row['id'].'" id="member" class="font-weight-bold text-info text-capitalize">&nbsp;'.$row['name'].'&nbsp;/&nbsp;'.$row['id'].'</option>';
                             }?>
                           </select>
                       </div>
                       <div class="col">
                         <label for="stdate" class="col-form-label">Start_Date:</label>
-                        <input type="date" class="form-control" id="stdate" name="stdate">
+                        <input type="date" class="form-control" id="stdate" name="stdate" required>
                       </div>
                       <div class="col">
                         <label for="endate" class="col-form-label">End_Date:</label>
-                        <input type="date" class="form-control" id="endate" name="endate" >
+                        <input type="date" class="form-control" id="endate" name="endate" required>
                       </div>
                     </div>
                     <div class="form-group mr-auto mt-2">
@@ -276,9 +264,8 @@ $(document).ready(function() {
             {data: 'id'},
             {data: 'image'},
             {data: 'name'},
-            {data: 'gender'},
-            {data: 'address'},
-            {data: 'contact'},
+            {data: 'st_date'},
+            {data: 'en_date'},
             {data: 'action'}
         ]
      });
@@ -290,7 +277,7 @@ $(document).ready(function() {
          $('#id').val('0');
          $('#exampleModalLabel').html("Add Schedule");
          $('#submit').val("Submit");
-             
+         $(".select-col").show();
         });
 
  // ****** insert schedual ***********
@@ -308,7 +295,8 @@ $(document).ready(function() {
                 var table = $('#example').DataTable(); 
                   table.ajax.reload( null, true );
                   $('#exampleModal').modal('hide');
-                }else{
+                }
+                else{
                     toastr.success('Schedual updated successfully');
                     $('#form')[0].reset();
                 var table = $('#example').DataTable(); 
@@ -317,6 +305,33 @@ $(document).ready(function() {
                 }                           
             }
         });             
+    });
+
+  // ****** edit schedual ***********
+    $(document).on('click', '.edit-btn', function() {
+        var id = $(this).data('eid');
+        $.ajax({
+            url : "fetch.php?editSchedual="+id,
+            type: "POST",
+            dataType: "json",
+            success: function(data) {
+               console.log(data);
+              // var member = data.member_id;
+              // // $("#memId selected").val(data.member_id);
+              //  $('#memId option[value=member]').attr('selected', true);
+              //   // $("#member").val(data.member_id);
+
+                $("#stdate").val(data.stdate);
+                $("#endate").val(data.endate);
+                $("#id").val(data.member_id);
+                $('#action').val('update');
+                $('#submit').val('UPDATE');
+                $('#exampleModalLabel').html("Edit Schedule");
+                $(".select-col").hide();
+                $('#exampleModal').modal('show');
+                
+            }
+        });
     });
 
 });

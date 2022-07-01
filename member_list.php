@@ -78,17 +78,7 @@
         <!--**********************************
             Nav header start
         ***********************************-->
-        <div class="nav-header">
-            <div class="brand-logo">
-                <a href="index.html">
-                    <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
-                    <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
-                    <span class="brand-title">
-                        <img src="images/logo-text.png" alt="">
-                    </span>
-                </a>
-            </div>
-        </div>
+        <?php include('includes/navheader.php');?>
         <!--**********************************
             Nav header end
         ***********************************-->
@@ -178,34 +168,34 @@
                     <div class="form-row">
                       <div class="col">
                         <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name">
+                        <input type="text" class="form-control" id="name" name="name" required>
                       </div>
                       <div class="col">
                         <label for="age" class="col-form-label">Age:</label>
-                        <input type="number" class="form-control" id="age" name="age">
+                        <input type="number" class="form-control" id="age" name="age" required>
                       </div>
                     </div>
                     <div class="form-row">
                       <div class="col">
                         <label for="address" class="col-form-label">Address:</label>
-                        <input type="text" class="form-control" id="address" name="address" >
+                        <input type="text" class="form-control" id="address" name="address" required>
                       </div>
                     </div>
                     <div class="form-row">
                       <div class="col">
                         <label for="contact" class="col-form-label">Contact:</label>
-                        <input type="text" id="contact" class="input form-control" name="contact">
+                        <input type="text" id="contact" class="input form-control" name="contact" required>
                       </div>
                       <div class="col">
                         <label for="email" class="col-form-label">Email:</label>
-                        <input type="email" id="email" class="input form-control" name="email">
+                        <input type="email" id="email" class="input form-control" name="email" required>
                       </div>                      
                     </div>
                     
                     <div class="form-row">
                       <div class="col">
                         <label class="col-form-label">Gender:</label>
-                          <select class="form-select form-select-lg custom-select" name="gender">
+                          <select class="form-select form-select-lg custom-select" name="gender" id="gender">
                             <option disabled selected>Select Gender</option>
                             <option class="" value="male" id="male">MALE</option>
                             <option class="" value="female" id="female">FEMALE</option>
@@ -213,7 +203,7 @@
                       </div>
                       <div class="col">
                         <label class="col-form-label">Shift:</label>
-                          <select class="form-select form-select-lg custom-select" name="shift">
+                          <select class="form-select form-select-lg custom-select" name="shift" required>
                             <option disabled selected>Select Shift</option>
                             <option class="" value="morning" id="morning">Morning</option>
                             <option class="" value="evening" id="evening">Evening</option>
@@ -227,35 +217,35 @@
                             $sql = "SELECT * FROM plans";
                             $result = mysqli_query($link, $sql);
                           ?>
-                          <select class="form-select form-select-lg custom-select" name="plan">
+                          <select class="form-select form-select-lg custom-select" id="plan" name="plan" required>
                             <option disabled selected>Select Plan</option>
                             <?php while($row = mysqli_fetch_array($result)){ 
-                             echo '<option value="'.$row['id'].'" id="plan">'.$row['plan'].' Months</option>';
+                             echo '<option value="'.$row['id'].'">'.$row['plan'].' Months</option>';
                              } ?>
                           </select>
                       </div>
                       <div class="col">
                         <label class="col-form-label">Packages:</label>
-                          <select class="form-select form-select-lg custom-select" name="package">
+                          <select class="form-select form-select-lg custom-select" id="package" name="package" required>
                             <option disabled selected>Select Package</option>
                           <?php 
                             $sql = "SELECT * FROM packages";
                             $result = mysqli_query($link, $sql);
                             while($row = mysqli_fetch_assoc($result)){
-                              echo'<option value="'.$row['id'].'" id="package">'.$row['package'].' &nbsp;&nbsp;&nbsp;&nbsp;RS = '.$row['amount'].'</option>';
+                              echo'<option value="'.$row['id'].'">'.$row['package'].' &nbsp;&nbsp;&nbsp;&nbsp;RS = '.$row['amount'].'</option>';
                             }?>
                           </select>
                       </div>  
                       <div class="col">
                         <label class="col-form-label">Trainers:</label>
-                          <select class="form-select form-select-lg custom-select" name="trainer">
+                          <select class="form-select form-select-lg custom-select" id="trainer" name="trainer" required>
                             <option disabled selected>Select Trainer</option>
                             <option value="0" id="no">No Trainer</option>
                             <?php 
                             $sql = "SELECT * FROM trainers";
                             $result = mysqli_query($link, $sql);
                             while($row = mysqli_fetch_assoc($result)){
-                              echo '<option value="'.$row['id'].'" id="trainer">'.$row['name'].' &nbsp;&nbsp;&nbsp;&nbsp;<b>Fee</b> = '.$row['rate'].'</option>';
+                              echo '<option value="'.$row['id'].'">'.$row['trainer'].' &nbsp;&nbsp;&nbsp;&nbsp;<b>Fee</b> = '.$row['rate'].'</option>';
                             }?>
                           </select>
                       </div>                    
@@ -352,7 +342,11 @@
     <script>
 $(document).ready(function() {           
         $('#example').DataTable({
-          order: [[0, 'desc']],
+          lengthMenu: [
+            [25, 10, 50, -1],
+            [25, 10, 50, 'All'],
+           ],
+        order: [[0, 'desc']],
         "processing": true,
         ajax: {
         url: "fetch.php?loadData",
@@ -373,18 +367,18 @@ $(document).ready(function() {
 
        $('.add').on('click', function() {
         $('#form')[0].reset();
-        $('#exampleModal').modal('show');
         $('#action').val('insert');
         $('#id').val('0');
         $('#exampleModalLabel').html("Add Record");
         $('#submit').val("Submit");
         $('#previewImg').attr("src", "db_images/members/placeholder-img.png");
-             
+        $('#exampleModal').modal('show');     
         });
        
     // ******* insert data *********    
         $('#form').on('submit', function(e){
-            e.preventDefault();    
+            e.preventDefault();
+            $('#gender').attr("required", true);
             var formData = new FormData(this);
             $.ajax({
                 url: "insert.php",
@@ -396,10 +390,10 @@ $(document).ready(function() {
                 success: function(data) {
                   toastr.success(data);
                   var table = $('#example').DataTable(); 
-                  table.ajax.reload( null, false );
+                  table.ajax.reload( null, false );                  
                   $('#form')[0].reset();
                   $('#exampleModal').modal('hide');   
-                                                   
+                  $(something).closest("tr").fadeIn(1000);                                 
                 }        
             });
         });
@@ -450,7 +444,10 @@ $(document).ready(function() {
                  }                           
                  $('#exampleModal').modal('show');
 
-            }
+                $("#plan").val(data.plan).trigger("change");            
+                $("#package").val(data.package).trigger("change");            
+                $("#trainer").val(data.trainer).trigger("change");
+             }
          });
       });
 
@@ -463,13 +460,23 @@ $(document).ready(function() {
                 type : "GET",
                 data : {viewId:id},
                 success:function(data){ 
-                  console.log(data); 
+                  // console.log(data); 
                    $(".modal-body").html(data);
                    $('#view-modal').modal('show');
                   
                 }
             });
-        });         
+        }); 
+        
+        //  ********** Print Button work start here **********
+        // $(document).on('click', '#printBtn', function(){
+        //   var id = $(this).data('pid');
+        //   console.log(id);
+        //   $.ajax({
+        //     url : "pdf.php?printId="+id,
+        //     type : "GET",
+        //   });
+        // });
 
       //  ********** Delete data from database **********
       $("#example").delegate(".dlt-btn", "click", function(){

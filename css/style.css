@@ -19504,7 +19504,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 }
 
 [data-nav-headerbg="color_1"] .nav-header {
-    background-color: #7571f9;
+    background-color: #fff;
 }
 
 [data-nav-headerbg="color_2"] .nav-header {

@@ -6,6 +6,11 @@
  header('location:login.php?session=unset');
 
  if(isset($_POST['action'])){
+   
+//   $sql = "SELECT * from schedul";
+//   $query = mysqli_query($link, $sql);
+//   $row = mysqli_fetch_array($query);
+//   $sid = $row['id'];
   
    $target = "db_images/members/".basename($_FILES['image']['name']);
    $name = mysqli_real_escape_string($link, $_POST['name']);
@@ -20,16 +25,16 @@
    $trainer = mysqli_real_escape_string($link, $_POST['trainer']);
    $image = $_FILES['image']['name'];
    
-   //  ********* Insert Data to database ***********
+   //  ********* Insert Data to Database *********
 if($_POST['action'] == 'insert'){
    $date = date('Y-m-d');
    $sql = "INSERT into members(name, age, address, contact, email, gender, shift, image, plan, package, trainer, date) VALUES('$name','$age','$address','$contact','$email','$gender','$shift','$image', '$plan', '$package', '$trainer', '$date')";
    $query = mysqli_query($link, $sql);
    move_uploaded_file($_FILES['image']['tmp_name'], $target);
    if($query){
-     echo "Insert successful";
+     echo "Member Added Successfully";
    }else{
-      echo "Insert unsuccessful";
+      echo "Added unsuccessful";
    }   
  }
 
@@ -40,7 +45,7 @@ elseif($_POST['action'] == 'update'){
    $query = mysqli_query($link, $sql);
    move_uploaded_file($_FILES['image']['tmp_name'], $target);
    if($query){
-      echo "update successful";
+      echo "Member Record Updated Successfully";
    }else{
       echo "update unsuccessful";
    }   
