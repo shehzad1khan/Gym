@@ -250,6 +250,7 @@
                         <label class="col-form-label">Trainers:</label>
                           <select class="form-select form-select-lg custom-select" name="trainer">
                             <option disabled selected>Select Trainer</option>
+                            <option value="0" id="no">No Trainer</option>
                             <?php 
                             $sql = "SELECT * FROM trainers";
                             $result = mysqli_query($link, $sql);
